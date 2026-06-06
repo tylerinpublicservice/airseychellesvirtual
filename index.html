@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Air Seychelles Virtual | Flying the Creole Spirit</title>
+    <title>Air Seychelles Virtual | Flying The Creole Spirit</title>
     
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/Z1bZH6fM/AIR-SEYCHELLES-LOGO.jpg">
     
@@ -46,15 +46,6 @@
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- Top Bar (Time & Language) --- */
-        .top-bar {
-            background-color: var(--dark-blue); color: white; display: flex;
-            justify-content: space-between; align-items: center; padding: 5px 50px; font-size: 12px;
-        }
-        .top-bar-right { display: flex; gap: 20px; align-items: center; }
-        .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 2px 8px; border-radius: 4px; cursor: pointer; }
-        .lang-btn:hover { background: rgba(255,255,255,0.2); }
-
         /* --- Dynamic Advisory Banner --- */
         #dynamic-advisory {
             background-color: #fcf8e3; color: #8a6d3b; text-align: center; 
@@ -68,14 +59,21 @@
         /* --- Navigation Bar --- */
         .navbar {
             background-color: var(--primary-blue); color: white; display: flex;
-            justify-content: space-between; align-items: center; padding: 15px 50px;
+            justify-content: space-between; align-items: center; padding: 10px 40px;
             position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .navbar .logo img { height: 45px; border-radius: 4px; transition: transform 0.3s; }
         .navbar .logo img:hover { transform: scale(1.05); }
-        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links { display: flex; gap: 20px; align-items: center; margin: 0 auto; }
+        .nav-right { display: flex; align-items: center; gap: 20px; font-size: 13px; }
         .nav-item { position: relative; cursor: pointer; font-weight: 500; font-size: 14px; padding: 10px 0; }
         .nav-item i { font-size: 10px; margin-left: 5px; }
+        
+        /* Language & Time Styles */
+        .time-display { font-weight: 500; letter-spacing: 0.5px; }
+        .lang-toggle { display: flex; gap: 5px; }
+        .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s;}
+        .lang-btn:hover { background: rgba(255,255,255,0.2); }
         
         /* Dropdowns */
         .dropdown {
@@ -86,7 +84,7 @@
         .nav-item:hover .dropdown { display: block; animation: slideDown 0.3s ease; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Fix for last dropdown going off-screen */
+        /* Fix for right-aligned dropdowns */
         .nav-item.align-right .dropdown { left: auto; right: 0; }
         
         .dropdown li a { display: block; padding: 10px 20px; font-size: 13px; transition: 0.2s; }
@@ -166,15 +164,7 @@
         <p style="color: #666; font-size: 14px; margin-top: 10px;" data-fr="Chargement en cours...">Loading experience...</p>
     </div>
 
-    <div class="top-bar">
-        <div id="seychelles-time">SCT: --:--:--</div>
-        <div class="top-bar-right">
-            <button class="lang-btn" onclick="toggleLanguage('EN')">EN</button>
-            <button class="lang-btn" onclick="toggleLanguage('FR')">FR</button>
-        </div>
-    </div>
-
-    <div id="dynamic-advisory" onclick="window.location.href='/news/'">
+    <div id="dynamic-advisory">
         <span class="badge-int" data-fr="ALERTE">PRIORITY</span> 
         <span id="advisory-text">Loading latest advisories...</span>
     </div>
@@ -183,6 +173,7 @@
         <div class="logo">
             <a href="/"><img src="https://i.ibb.co/Z1bZH6fM/AIR-SEYCHELLES-LOGO.jpg" alt="Air Seychelles Virtual"></a>
         </div>
+        
         <ul class="nav-links">
             <li class="nav-item"><span data-fr="Voyage">Travel</span> <i class="fas fa-chevron-down"></i>
                 <ul class="dropdown">
@@ -210,15 +201,23 @@
                     <li><a href="/help/contact/">Contact Us</a></li>
                 </ul>
             </li>
-            <li class="nav-item align-right" style="border-left: 1px solid rgba(255,255,255,0.3); padding-left: 20px;">
+        </ul>
+
+        <div class="nav-right">
+            <div class="time-display" id="seychelles-time">Seychelles Local Time: --:--:--</div>
+            <div class="lang-toggle">
+                <button class="lang-btn" onclick="toggleLanguage('EN')">EN</button>
+                <button class="lang-btn" onclick="toggleLanguage('FR')">FR</button>
+            </div>
+            <div class="nav-item align-right" style="border-left: 1px solid rgba(255,255,255,0.3); padding-left: 15px;">
                 <span data-fr="Connexion">Login</span> <i class="fas fa-user-circle"></i>
                 <ul class="dropdown">
                     <li><a href="/login/passenger/">Passenger Dashboard</a></li>
                     <li><a href="/login/staff/">Staff Dashboard</a></li>
                     <li><a href="/login/admin/">Website Admin Dashboard</a></li>
                 </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
     </nav>
 
     <div class="hero-container fade-in">
@@ -241,11 +240,11 @@
             <div class="form-row">
                 <div class="input-group">
                     <label>From</label>
-                    <select><option>Select Departure</option><option>Mahé (IPAP)</option></select>
+                    <select id="book-from"><option value="">Select Departure</option></select>
                 </div>
                 <div class="input-group">
                     <label>To</label>
-                    <select><option>Select Destination</option></select>
+                    <select id="book-to"><option value="">Select Destination</option></select>
                 </div>
             </div>
             <div class="form-row">
@@ -368,14 +367,14 @@
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.display = 'none'; }, 500);
-            }, 800); // slight delay for smooth effect
+            }, 800);
         });
 
         // --- 2. Live Seychelles Local Time ---
         function updateTime() {
             const options = { timeZone: 'Indian/Mahe', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
             const timeString = new Intl.DateTimeFormat('en-GB', options).format(new Date());
-            document.getElementById('seychelles-time').innerText = `SCT: ${timeString}`;
+            document.getElementById('seychelles-time').innerText = `Seychelles Local Time: ${timeString}`;
         }
         setInterval(updateTime, 1000);
         updateTime();
@@ -398,7 +397,6 @@
             document.querySelectorAll(`[data-${lang.toLowerCase()}]`).forEach(el => {
                 const newText = el.getAttribute(`data-${lang.toLowerCase()}`);
                 if (newText) {
-                    // Quick fade effect on text change
                     el.style.opacity = 0;
                     setTimeout(() => {
                         if (el.tagName === 'INPUT') { el.placeholder = newText; } 
@@ -417,33 +415,65 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // --- 6. Supabase Backend: Dynamic Priority Banner ---
+        // --- 6. SUPABASE REAL BACKEND CONNECTION ---
         const supabaseUrl = 'https://dwtvzwwabeqammyfxeev.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // Ensure your real anon key is placed here in production
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3dHZ6d3dhYmVxYW1teWZ4ZWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDI3NzksImV4cCI6MjA5NTc3ODc3OX0.N5o_Ml9mGvod5ek2uXRMVVJqFiDPwhp3hpaO3NObp2w';
         
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // Fetch Priority News Banner from your database
         async function fetchPriorityNews() {
             try {
-                // Uncomment to initialize when using real keys:
-                // const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-                // const { data, error } = await supabase.from('news_posts').select('id, title').eq('is_priority', true).order('published_at', { ascending: false }).limit(1);
-                
-                // MOCK DATA FOR TESTING UI (Replace with real logic above)
-                const data = [{ id: '123', title: 'New Fleet Update: Widebody additions for international routes.' }]; 
-                
+                const { data, error } = await supabase
+                    .from('news_posts')
+                    .select('id, title')
+                    .eq('is_priority', true)
+                    .order('published_at', { ascending: false })
+                    .limit(1);
+                    
                 if (data && data.length > 0) {
                     const banner = document.getElementById('dynamic-advisory');
                     document.getElementById('advisory-text').innerText = data[0].title;
-                    banner.style.display = 'block'; // Make it visible!
-                    // Change link dynamically
+                    banner.style.display = 'block'; 
                     banner.onclick = () => window.location.href = `/about/news/?id=${data[0].id}`;
                 }
             } catch (err) {
-                console.error("Failed to load news", err);
+                console.error("Failed to load priority news from Supabase", err);
             }
         }
         
-        // Load news on startup
+        // Fetch Destinations to populate the booking board dropdowns
+        async function fetchDestinations() {
+            try {
+                const { data, error } = await supabase
+                    .from('destinations')
+                    .select('icao');
+                    
+                if (data && data.length > 0) {
+                    const fromSelect = document.getElementById('book-from');
+                    const toSelect = document.getElementById('book-to');
+                    
+                    data.forEach(dest => {
+                        let optFrom = document.createElement('option');
+                        optFrom.value = dest.icao;
+                        optFrom.textContent = dest.icao;
+                        fromSelect.appendChild(optFrom);
+                        
+                        let optTo = document.createElement('option');
+                        optTo.value = dest.icao;
+                        optTo.textContent = dest.icao;
+                        toSelect.appendChild(optTo);
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load destinations from Supabase", err);
+            }
+        }
+        
+        // Execute the backend fetches on load
         fetchPriorityNews();
+        fetchDestinations();
     </script>
 </body>
 </html>
