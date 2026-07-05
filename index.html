@@ -3,479 +3,493 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Air Seychelles Virtual — Premium Virtual Flying Across PTFS</title>
+<title>Air Seychelles Virtual | Premium Virtual Flying Across PTFS</title>
 <link rel="icon" href="https://i.ibb.co/0RJQ7WvZ/AIR-SEYCHELLES-LOGO.png" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:  { DEFAULT: '#0098D4', dark: '#0079AB', deep: '#0C2B3A', foot: '#17A6E8', mist: '#F4F9FC' }
+        },
+        fontFamily: { sans: ['Poppins', 'sans-serif'] }
+      }
+    }
+  };
+</script>
 <style>
-  :root{
-    --sky:#0AA1DC; --sky-deep:#0784BC; --sky-soft:#4FC3E8;
-    --navy:#073b57; --ink:#0c2b3a; --muted:#5b7180;
-    --footer:#17a6e8; --mist:#f3f8fb; --line:#e4eef4;
-    --sun1:#e4322b; --sun2:#f39222; --sun3:#fbd23b;
-    --radius:16px; --shadow:0 18px 50px -18px rgba(7,59,87,.35);
-    --wrap:1200px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
-  .accent-text{background:linear-gradient(90deg,var(--sun1),var(--sun2),var(--sun3));-webkit-background-clip:text;background-clip:text;color:transparent}
-
-  /* ---------- announcement bar ---------- */
-  .announce{background:var(--navy);color:#dff3fb;font-size:.82rem;letter-spacing:.3px;text-align:center;padding:9px 16px;font-weight:300}
-  .announce b{color:#fff;font-weight:600}
-
-  /* ---------- nav ---------- */
-  header.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
-  .brand{display:flex;align-items:center;gap:10px}
-  .brand img{height:38px;width:auto}
-  .nav-links{display:flex;align-items:center;gap:30px}
-  .nav-links > a,.nav-item > button{font-size:.95rem;font-weight:500;color:var(--ink);background:none;border:0;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px}
-  .nav-links > a:hover,.nav-item:hover > button{color:var(--sky-deep)}
-  .nav-item{position:relative}
-  .nav-item .caret{font-size:.6rem;transition:transform .2s}
-  .nav-item:hover .caret{transform:rotate(180deg)}
-  .dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:10px;min-width:220px;opacity:0;visibility:hidden;transition:.2s}
-  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-  .dropdown a{display:block;padding:9px 12px;border-radius:8px;font-size:.9rem;color:var(--muted)}
-  .dropdown a:hover{background:var(--mist);color:var(--sky-deep)}
-  .nav-right{display:flex;align-items:center;gap:18px}
-  .lang{font-size:.85rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:4px}
-  .icon-btn{background:none;border:0;cursor:pointer;color:var(--ink);display:grid;place-items:center;padding:4px}
-  .btn-login{background:var(--sky);color:#fff;padding:9px 20px;border-radius:999px;font-weight:600;font-size:.9rem;transition:.2s}
-  .btn-login:hover{background:var(--sky-deep)}
-  .hamburger{display:none;background:none;border:0;cursor:pointer;color:var(--ink)}
-
-  /* ---------- hero ---------- */
-  .hero{position:relative;overflow:hidden;color:#fff;
-    background:
-      radial-gradient(120% 90% at 82% 8%, rgba(251,210,59,.35), transparent 45%),
-      radial-gradient(90% 80% at 12% 12%, rgba(189,233,245,.35), transparent 50%),
-      linear-gradient(160deg,#0784bc 0%,#0aa1dc 38%,#4fc3e8 68%,#bde9f5 100%);
-    padding:70px 0 150px}
-  .hero .wrap{position:relative;z-index:3}
-  .eyebrow{font-weight:700;letter-spacing:3px;font-size:.8rem;text-transform:uppercase;opacity:.92}
-  .hero h1{font-size:clamp(2.6rem,7vw,5.4rem);line-height:1;margin:10px 0 6px;font-weight:700;text-shadow:0 6px 24px rgba(7,59,87,.3)}
-  .hero h1 .script{font-family:'Kaushan Script',cursive;font-weight:400;font-size:1.12em;display:inline-block}
-  .hero p.lead{max-width:520px;font-weight:300;font-size:1.05rem;margin-top:10px;opacity:.96}
-  .btn-learn{display:inline-block;margin-top:22px;background:#fff;color:var(--sky-deep);padding:13px 30px;border-radius:999px;font-weight:600;box-shadow:var(--shadow);transition:.2s}
-  .btn-learn:hover{transform:translateY(-2px)}
-  .bird{position:absolute;right:8%;top:30%;width:120px;opacity:.9;z-index:2;animation:float 6s ease-in-out infinite}
-  @keyframes float{50%{transform:translateY(-14px)}}
-  .waves{position:absolute;left:0;right:0;bottom:-1px;z-index:1;width:100%}
-
-  /* ---------- booking widget ---------- */
-  .booking{max-width:1040px;margin:-95px auto 0;position:relative;z-index:20;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
-  .tabs{display:flex;border-bottom:1px solid var(--line)}
-  .tab{flex:1;text-align:center;padding:18px;font-weight:600;color:var(--muted);cursor:pointer;background:none;border:0;font-family:inherit;font-size:1rem;position:relative}
-  .tab.active{color:var(--sky-deep)}
-  .tab.active::after{content:"";position:absolute;left:20%;right:20%;bottom:-1px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--sun1),var(--sun2),var(--sun3))}
-  .panel{display:none;padding:26px 28px 30px}
-  .panel.active{display:block}
-  .fields{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:end}
-  .field{display:flex;flex-direction:column;gap:6px;position:relative}
-  .field label{font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
-  .field input,.field select{border:0;border-bottom:2px solid var(--line);padding:8px 2px;font-family:inherit;font-size:1rem;color:var(--ink);background:none;outline:none}
-  .field input:focus,.field select:focus{border-color:var(--sky)}
-  .field .locked{font-weight:600;color:var(--ink);padding:8px 2px;border-bottom:2px solid var(--line)}
-  .field .hint{font-size:.68rem;color:var(--muted)}
-  .search-btn{grid-column:span 4;justify-self:end;background:var(--sky);color:#fff;border:0;padding:14px 40px;border-radius:999px;font-weight:600;font-size:1rem;cursor:pointer;font-family:inherit;transition:.2s}
-  .search-btn:hover{background:var(--sky-deep)}
-  .note{grid-column:span 4;font-size:.8rem;color:var(--muted);text-align:right}
-
-  /* ---------- sections ---------- */
-  section{padding:88px 0}
-  .sec-mist{background:var(--mist)}
-  .sec-eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:.78rem;font-weight:700;color:var(--sky-deep)}
-  h2.sec-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;line-height:1.15;margin:8px 0 18px}
-  .lead-copy{max-width:640px;color:var(--muted);font-size:1.05rem;font-weight:300}
-
-  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:8px}
-  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
-  .stat b{font-size:1.9rem;color:var(--sky-deep);font-weight:700;display:block;font-family:'Poppins'}
-  .stat span{font-size:.85rem;color:var(--muted)}
-  .about-card{background:linear-gradient(160deg,var(--sky) 0%,var(--sky-deep) 100%);border-radius:20px;padding:40px;color:#fff;box-shadow:var(--shadow)}
-  .about-card h3{font-family:'Kaushan Script',cursive;font-weight:400;font-size:2rem;margin-bottom:10px}
-  .about-card ul{list-style:none;margin-top:16px;display:grid;gap:12px}
-  .about-card li{display:flex;gap:10px;font-weight:300;font-size:.98rem}
-  .about-card li::before{content:"✦";color:var(--sun3)}
-
-  /* leadership */
-  .leader{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;padding:40px;box-shadow:var(--shadow)}
-  .leader-photo{aspect-ratio:1;border-radius:18px;background:
-      radial-gradient(120% 120% at 30% 20%,var(--sun3),transparent 45%),
-      linear-gradient(160deg,var(--sky),var(--sky-deep));display:grid;place-items:center;color:#fff;font-family:'Kaushan Script',cursive;font-size:3rem}
-  .leader h3{font-size:1.6rem;font-weight:700}
-  .leader .role{color:var(--sky-deep);font-weight:600;margin-bottom:14px}
-  .leader p{color:var(--muted);font-weight:300}
-  .leader .sig{font-family:'Kaushan Script',cursive;font-size:1.6rem;color:var(--ink);margin-top:16px}
-
-  /* careers */
-  .jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:34px}
-  .job{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:.2s;display:flex;flex-direction:column;gap:10px}
-  .job:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
-  .job .dept{font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sky-deep)}
-  .job h4{font-size:1.2rem;font-weight:600}
-  .job p{color:var(--muted);font-size:.92rem;font-weight:300;flex:1}
-  .job .apply{align-self:flex-start;margin-top:6px;font-weight:600;color:var(--sky-deep);font-size:.9rem}
-  .job .apply:hover{color:var(--sun2)}
-  .jobs-empty{margin-top:30px;background:#fff;border:1px dashed var(--line);border-radius:16px;padding:40px;text-align:center;color:var(--muted)}
-  .jobs-empty a{color:var(--sky-deep);font-weight:600}
-
-  /* ---------- footer ---------- */
-  footer{background:var(--footer);color:#fff;padding:70px 0 34px}
-  .foot-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:40px}
-  .foot-col h5{font-size:.95rem;font-weight:600;margin-bottom:18px;opacity:.95}
-  .foot-col a{display:block;padding:7px 0;font-weight:300;font-size:.95rem;opacity:.92}
-  .foot-col a:hover{opacity:1;text-decoration:underline}
-  .newsletter{display:flex;background:#fff;border-radius:999px;padding:6px 6px 6px 18px;max-width:360px;align-items:center}
-  .newsletter input{border:0;outline:none;flex:1;font-family:inherit;color:var(--ink);background:none;font-size:.9rem}
-  .newsletter button{background:var(--sky-deep);border:0;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem}
-  .discord-btn{display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;margin-top:22px;transition:.2s}
-  .discord-btn:hover{background:#4752c4}
-  .socials{display:flex;gap:16px;margin-top:22px}
-  .socials a{width:22px;height:22px;opacity:.95}
-  .socials a:hover{opacity:1;transform:translateY(-2px)}
-  .foot-note{border-top:1px solid rgba(255,255,255,.25);margin-top:48px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem;font-weight:300;opacity:.9}
-  .foot-note em{font-style:normal;font-weight:600}
-  .msg{font-size:.82rem;margin-top:8px}
-
-  /* ---------- responsive ---------- */
-  @media(max-width:900px){
-    .about-grid{grid-template-columns:1fr;gap:32px}
-    .leader{grid-template-columns:1fr;text-align:center}
-    .leader-photo{max-width:220px;margin:0 auto}
-    .foot-grid{grid-template-columns:1fr}
-    .fields{grid-template-columns:repeat(2,1fr)}
-    .search-btn,.note{grid-column:span 2}
-    .bird{display:none}
-  }
-  @media(max-width:720px){
-    .nav-links{position:fixed;inset:76px 0 auto 0;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);display:none}
-    .nav-links.open{display:flex}
-    .nav-links > a,.nav-item > button{padding:14px 0;width:100%;justify-content:space-between}
-    .dropdown{position:static;transform:none;box-shadow:none;border:0;opacity:1;visibility:visible;padding:0 0 8px 12px;min-width:auto}
-    .nav-item:hover .dropdown{transform:none}
-    .hamburger{display:block}
-    .btn-login{display:none}
-    .fields{grid-template-columns:1fr}
-    .search-btn,.note{grid-column:span 1}
-    section{padding:60px 0}
-  }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
-  :focus-visible{outline:3px solid var(--sun2);outline-offset:2px;border-radius:4px}
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Poppins', sans-serif; }
+  .nav-link { position: relative; font-size: .82rem; font-weight: 500; letter-spacing: .02em; padding: .35rem 0; transition: color .2s; }
+  .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0; background: #fff; transition: width .25s; }
+  .nav-link:hover::after { width: 100%; }
+  .field-label { font-size: .62rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #7c93a1; }
+  .field-input { width: 100%; border: 0; border-bottom: 2px solid #e2edf3; padding: .5rem 0; font-size: .95rem; color: #0c2b3a; outline: none; background: none; transition: border-color .2s; }
+  .field-input:focus { border-color: #0098D4; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  .badge { font-size: .62rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: .25rem .6rem; border-radius: 999px; }
+  .b-scheduled { background:#e0f2fb; color:#0079AB; }
+  .b-boarding  { background:#dcfce7; color:#166534; }
+  .b-departed  { background:#fef9c3; color:#a16207; }
+  .b-arrived,.b-completed { background:#f1f5f9; color:#475569; }
+  .b-delayed   { background:#ffedd5; color:#c2410c; }
+  .b-cancelled { background:#fee2e2; color:#b91c1c; }
+  :focus-visible { outline: 3px solid #0098D4; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .reveal { transition: none; } * { scroll-behavior: auto; } }
 </style>
 </head>
-<body>
+<body class="bg-white text-brand-deep">
 
 <!-- announcement bar -->
-<div class="announce">✈ Now boarding across PTFS — <b>Air Seychelles Virtual</b> is live. Book your first virtual journey today.</div>
+<div class="bg-brand-deep text-white text-center text-xs font-light py-2 px-4">
+  Now operating scheduled services across PTFS. Book your journey with Air Seychelles Virtual.
+</div>
 
-<!-- nav -->
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="Air Seychelles Virtual home">
-      <img src="https://i.ibb.co/C399b1XT/images.png" alt="Air Seychelles Virtual" />
+<!-- navigation -->
+<header class="bg-brand sticky top-0 z-50 shadow-sm">
+  <div class="max-w-[1280px] mx-auto px-6 h-[70px] flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-3">
+      <img src="https://i.ibb.co/C399b1XT/images.png" alt="Air Seychelles Virtual" class="h-9 w-auto" />
     </a>
 
-    <nav class="nav-links" id="navLinks">
-      <div class="nav-item">
-        <button aria-haspopup="true">Travel Info <span class="caret">▼</span></button>
-        <div class="dropdown">
-          <a href="#booking">Book Your Flight</a>
-          <a href="#">Route Map</a>
-          <a href="#">Manage Your Booking</a>
-          <a href="#">Seychellois Miles</a>
-          <a href="#">VIP Services</a>
-          <a href="#">Travel Terms &amp; Conditions</a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <button aria-haspopup="true">About Us <span class="caret">▼</span></button>
-        <div class="dropdown">
-          <a href="#about">About Air Seychelles Virtual</a>
-          <a href="#leadership">Our Leadership</a>
-          <a href="#careers">Careers</a>
-          <a href="#">Our Fleet</a>
-          <a href="#">Destinations</a>
-          <a href="#">Feedback</a>
-        </div>
-      </div>
-      <a href="#">Explore Seychelles</a>
-      <a href="#">Help</a>
+    <nav class="hidden lg:flex items-center gap-9 text-white">
+      <a href="#booking" class="nav-link">Travel Info</a>
+      <a href="#about" class="nav-link">About Us</a>
+      <a href="#chairman" class="nav-link">Leadership</a>
+      <a href="#careers" class="nav-link">Careers</a>
+      <a href="#help" class="nav-link">Help</a>
     </nav>
 
-    <div class="nav-right">
-      <span class="lang">ENG ▾</span>
-      <button class="icon-btn" aria-label="Search">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-      </button>
-      <a href="#" class="btn-login">Login</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+    <div class="flex items-center gap-5 text-white">
+      <span class="hidden md:inline text-xs font-medium opacity-90">ENG</span>
+      <button class="hidden md:inline-grid place-items-center" aria-label="Search"><i class="fa-solid fa-magnifying-glass text-sm"></i></button>
+      <button id="authBtn" class="bg-white text-brand text-xs font-semibold px-5 py-2 rounded-full hover:bg-brand-mist transition">Login</button>
+      <button id="burger" class="lg:hidden text-lg" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     </div>
+  </div>
+  <div id="mobileNav" class="lg:hidden hidden bg-brand-dark text-white">
+    <a href="#booking" class="block px-6 py-3 text-sm border-t border-white/10">Travel Info</a>
+    <a href="#about" class="block px-6 py-3 text-sm border-t border-white/10">About Us</a>
+    <a href="#chairman" class="block px-6 py-3 text-sm border-t border-white/10">Leadership</a>
+    <a href="#careers" class="block px-6 py-3 text-sm border-t border-white/10">Careers</a>
+    <a href="#help" class="block px-6 py-3 text-sm border-t border-white/10">Help</a>
   </div>
 </header>
 
 <!-- hero -->
-<section class="hero" id="top">
-  <div class="wrap">
-    <p class="eyebrow">Non-stop virtual flights across PTFS</p>
-    <h1><span class="script">Air Seychelles</span><br><span class="accent-text">Virtual</span></h1>
-    <p class="lead">A premium Roblox virtual airline inspired by the spirit of Seychelles — from the first click to final boarding, fly the way real passengers do.</p>
-    <a href="#about" class="btn-learn">Learn More</a>
+<section id="top" class="relative">
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://i.ibb.co/ksVnWQSG/Paphos-International-Airport.png')"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-brand-deep/70 via-brand-deep/45 to-brand-deep/80"></div>
+  <div class="relative max-w-[1280px] mx-auto px-6 pt-24 pb-52 text-center text-white">
+    <p class="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-white/85 mb-5 reveal">Welcome aboard Air Seychelles Virtual</p>
+    <h1 class="text-4xl md:text-6xl font-700 font-semibold leading-tight max-w-3xl mx-auto reveal">A real airline experience, flown across PTFS.</h1>
+    <p class="mt-6 text-base md:text-lg font-light text-white/90 max-w-2xl mx-auto reveal">From booking to boarding, every step is designed to feel like flying with a national carrier. Search a scheduled flight to begin.</p>
+    <a href="#booking" class="reveal inline-block mt-8 bg-white text-brand font-semibold text-sm px-8 py-3 rounded-full hover:bg-brand-mist transition">Book a flight</a>
   </div>
-  <svg class="bird" viewBox="0 0 100 60" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M8 40 Q30 8 50 34 Q70 8 92 40"/></svg>
-  <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" d="M0,64 C240,120 480,20 720,52 C960,84 1200,120 1440,72 L1440,120 L0,120 Z"/></svg>
 </section>
 
 <!-- booking widget -->
-<div class="booking" id="booking">
-  <div class="tabs" role="tablist">
-    <button class="tab active" data-tab="flights" role="tab">Flights</button>
-    <button class="tab" data-tab="manage" role="tab">Manage Booking</button>
-    <button class="tab" data-tab="checkin" role="tab">Check-In</button>
-  </div>
-
-  <!-- Flights -->
-  <div class="panel active" data-panel="flights">
-    <div class="fields">
-      <div class="field">
-        <label>Trip Type</label>
-        <div class="locked">One Way</div>
-        <span class="hint">Air Seychelles Virtual flies one-way only</span>
-      </div>
-      <div class="field">
-        <label for="from">From</label>
-        <select id="from">
-          <option value="IPAP">Paphos International — IPAP (Hub)</option>
-          <option value="IRFD">Greater Rockford International — IRFD</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="to">Destination</label>
-        <select id="to">
-          <option value="">Select destination</option>
-          <option value="IRFD">Greater Rockford International — IRFD</option>
-          <option value="IPAP">Paphos International — IPAP</option>
-          <option value="" disabled>More destinations coming soon</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="depart">Depart</label>
-        <input type="date" id="depart" />
-      </div>
-      <div class="field">
-        <label>Passengers</label>
-        <div class="locked">1 Adult</div>
-        <span class="hint">Bookings are for one passenger</span>
-      </div>
-      <button class="search-btn" data-action="search">Search Flights</button>
+<div id="booking" class="max-w-[1080px] mx-auto px-4 -mt-40 relative z-30">
+  <div class="bg-white rounded-2xl shadow-[0_24px_60px_-24px_rgba(12,43,58,.4)] border border-slate-100 overflow-hidden reveal">
+    <div class="flex border-b border-slate-100">
+      <button data-tab="flights" class="tab flex-1 py-5 text-sm font-semibold text-brand border-b-2 border-brand"><i class="fa-solid fa-plane-departure mr-2"></i>Flights</button>
+      <button data-tab="manage" class="tab flex-1 py-5 text-sm font-semibold text-slate-500 border-b-2 border-transparent hover:text-brand-deep"><i class="fa-solid fa-suitcase-rolling mr-2"></i>Manage Booking</button>
+      <button data-tab="checkin" class="tab flex-1 py-5 text-sm font-semibold text-slate-500 border-b-2 border-transparent hover:text-brand-deep"><i class="fa-solid fa-clipboard-check mr-2"></i>Check-In</button>
     </div>
-    <p class="msg" id="flightsMsg"></p>
-  </div>
 
-  <!-- Manage -->
-  <div class="panel" data-panel="manage">
-    <div class="fields">
-      <div class="field"><label for="mPnr">Booking Reference (PNR)</label><input id="mPnr" placeholder="ASV-XXXXXX" /></div>
-      <div class="field"><label for="mName">Last Name</label><input id="mName" placeholder="As on your passport" /></div>
-      <button class="search-btn" data-action="manage">Retrieve Booking</button>
+    <!-- flights -->
+    <div data-panel="flights" class="p-7 md:p-9">
+      <div class="grid md:grid-cols-4 gap-6 items-end">
+        <div>
+          <label class="field-label">Trip Type</label>
+          <div class="field-input font-semibold">One Way</div>
+          <p class="text-[.65rem] text-slate-400 mt-1">Air Seychelles Virtual flies one way only</p>
+        </div>
+        <div>
+          <label class="field-label" for="fFrom">From</label>
+          <select id="fFrom" class="field-input"><option>Loading...</option></select>
+        </div>
+        <div>
+          <label class="field-label" for="fTo">Destination</label>
+          <select id="fTo" class="field-input"><option>Loading...</option></select>
+        </div>
+        <div>
+          <label class="field-label" for="fDate">Depart</label>
+          <input type="date" id="fDate" class="field-input" />
+        </div>
+        <div class="md:col-span-3">
+          <label class="field-label">Passengers</label>
+          <div class="field-input font-semibold">1 Adult</div>
+        </div>
+        <div class="md:col-span-1">
+          <button id="fSearch" class="w-full bg-brand text-white text-sm font-semibold py-3.5 rounded-full hover:bg-brand-dark transition">Search flights</button>
+        </div>
+      </div>
+      <div id="flightResults" class="mt-7 hidden"></div>
     </div>
-    <p class="msg" id="manageMsg"></p>
-  </div>
 
-  <!-- Check-in -->
-  <div class="panel" data-panel="checkin">
-    <div class="fields">
-      <div class="field"><label for="cPnr">Booking Reference (PNR)</label><input id="cPnr" placeholder="ASV-XXXXXX" /></div>
-      <div class="field"><label for="cName">Last Name</label><input id="cName" placeholder="As on your passport" /></div>
-      <button class="search-btn" data-action="checkin">Check In</button>
+    <!-- manage -->
+    <div data-panel="manage" class="p-7 md:p-9 hidden">
+      <div class="grid md:grid-cols-3 gap-6 items-end">
+        <div>
+          <label class="field-label" for="mPnr">Booking Reference</label>
+          <input id="mPnr" class="field-input uppercase" placeholder="ASV-XXXXXX" />
+        </div>
+        <div>
+          <label class="field-label" for="mName">Last Name</label>
+          <input id="mName" class="field-input" placeholder="As shown on your passport" />
+        </div>
+        <div>
+          <button id="mBtn" class="w-full bg-brand text-white text-sm font-semibold py-3.5 rounded-full hover:bg-brand-dark transition">Retrieve booking</button>
+        </div>
+      </div>
+      <div id="manageResult" class="mt-7 hidden"></div>
     </div>
-    <p class="msg" id="checkinMsg"></p>
+
+    <!-- checkin -->
+    <div data-panel="checkin" class="p-7 md:p-9 hidden">
+      <div class="grid md:grid-cols-3 gap-6 items-end">
+        <div>
+          <label class="field-label" for="cPnr">Booking Reference</label>
+          <input id="cPnr" class="field-input uppercase" placeholder="ASV-XXXXXX" />
+        </div>
+        <div>
+          <label class="field-label" for="cName">Last Name</label>
+          <input id="cName" class="field-input" placeholder="As shown on your passport" />
+        </div>
+        <div>
+          <button id="cBtn" class="w-full bg-brand text-white text-sm font-semibold py-3.5 rounded-full hover:bg-brand-dark transition">Check in</button>
+        </div>
+      </div>
+      <p class="text-[.7rem] text-slate-400 mt-3">Online check-in opens 12 hours before departure.</p>
+      <div id="checkinResult" class="mt-7 hidden"></div>
+    </div>
   </div>
 </div>
 
-<!-- about -->
-<section id="about">
-  <div class="wrap about-grid">
+<!-- scheduled flights board -->
+<section class="max-w-[1280px] mx-auto px-6 pt-20 pb-4">
+  <div class="flex items-end justify-between mb-6 reveal">
     <div>
-      <p class="sec-eyebrow">About Us</p>
-      <h2 class="sec-title">Not a roleplay group — a complete virtual airline.</h2>
-      <p class="lead-copy">Air Seychelles Virtual operates like a real structured airline: scheduled flights, trained departments, virtual passports and boarding passes, and automated updates through Discord. Every passenger gets the full journey, from booking to boarding.</p>
-      <div class="stats">
-        <div class="stat"><b>PTFS</b><span>Our home platform for live operations</span></div>
-        <div class="stat"><b>IPAP</b><span>Paphos International — our main hub</span></div>
-        <div class="stat"><b>9</b><span>Departments from OCC to Cabin Services</span></div>
-        <div class="stat"><b>24/7</b><span>Discord-powered passenger updates</span></div>
+      <p class="text-xs font-semibold tracking-[0.15em] uppercase text-brand">Operations</p>
+      <h2 class="text-2xl md:text-3xl font-semibold mt-1">Scheduled flights</h2>
+    </div>
+    <p class="text-xs text-slate-400 hidden md:block">Live from our operations centre</p>
+  </div>
+  <div class="border border-slate-200 rounded-xl overflow-x-auto reveal">
+    <table class="w-full text-left min-w-[820px]">
+      <thead>
+        <tr class="text-[.65rem] font-semibold uppercase tracking-wider text-slate-400 bg-slate-50 border-b border-slate-200">
+          <th class="py-4 px-6">Flight</th>
+          <th class="py-4 px-6">Route</th>
+          <th class="py-4 px-6">Date</th>
+          <th class="py-4 px-6">Departs</th>
+          <th class="py-4 px-6">Arrives</th>
+          <th class="py-4 px-6">Status</th>
+        </tr>
+      </thead>
+      <tbody id="board" class="text-sm">
+        <tr><td colspan="6" class="py-10 text-center text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading scheduled flights</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- about -->
+<section id="about" class="max-w-[1280px] mx-auto px-6 py-24">
+  <div class="grid lg:grid-cols-2 gap-14 items-center">
+    <div class="reveal">
+      <p class="text-xs font-semibold tracking-[0.15em] uppercase text-brand">About us</p>
+      <h2 class="text-3xl md:text-4xl font-semibold mt-2 leading-tight">Not a roleplay group. A complete virtual airline.</h2>
+      <p class="mt-5 text-slate-500 font-light leading-relaxed">Air Seychelles Virtual operates like a real structured carrier, with scheduled flights, trained departments, and full passenger services. Every member receives a virtual Republic of Seychelles passport, books real itineraries, checks in online, and receives boarding passes and updates through Discord.</p>
+      <div class="grid grid-cols-2 gap-5 mt-8">
+        <div class="border border-slate-200 rounded-xl p-5"><div class="text-2xl font-semibold text-brand">IPAP</div><div class="text-sm text-slate-500">Paphos International, our main hub</div></div>
+        <div class="border border-slate-200 rounded-xl p-5"><div class="text-2xl font-semibold text-brand">PTFS</div><div class="text-sm text-slate-500">Our live operations platform</div></div>
+        <div class="border border-slate-200 rounded-xl p-5"><div class="text-2xl font-semibold text-brand">9</div><div class="text-sm text-slate-500">Departments, from OCC to Cabin Services</div></div>
+        <div class="border border-slate-200 rounded-xl p-5"><div class="text-2xl font-semibold text-brand">24/7</div><div class="text-sm text-slate-500">Automated passenger updates on Discord</div></div>
       </div>
     </div>
-    <div class="about-card">
-      <h3>Fly with purpose</h3>
-      <p style="font-weight:300;opacity:.95">Everything a real passenger expects, built for our world:</p>
-      <ul>
-        <li>Discord login &amp; virtual Seychelles passport</li>
-        <li>Scheduled-flight booking with real PNRs</li>
-        <li>Online check-in &amp; digital boarding passes</li>
-        <li>Seychellois Miles loyalty rewards</li>
-        <li>Automated confirmations to your DMs</li>
+    <div class="bg-brand rounded-2xl p-9 text-white shadow-xl reveal">
+      <h3 class="text-xl font-semibold mb-5">Everything a passenger expects</h3>
+      <ul class="space-y-4 text-sm font-light">
+        <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/80"></i>Discord login and virtual Seychelles passport</li>
+        <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/80"></i>Scheduled-flight booking with real booking references</li>
+        <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/80"></i>Online check-in and digital boarding passes</li>
+        <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/80"></i>Seychellois Miles loyalty rewards</li>
+        <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-white/80"></i>Confirmations delivered straight to your Discord</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- leadership -->
-<section class="sec-mist" id="leadership">
-  <div class="wrap">
-    <p class="sec-eyebrow">Our Leadership</p>
-    <h2 class="sec-title">Founder &amp; Chief Executive Officer</h2>
-    <div class="leader">
-      <div class="leader-photo">AS</div>
-      <div>
-        <h3>[ Founder Name ]</h3>
-        <p class="role">Founder &amp; Chief Executive Officer</p>
-        <p>Air Seychelles Virtual was founded on a simple belief: a virtual airline can feel as real, professional, and welcoming as the airline that inspired it. Our mission is to give every passenger and every staff member a genuine airline experience — structured operations, real service standards, and the warmth of Seychellois hospitality carried across PTFS.</p>
-        <div class="sig">Air Seychelles Virtual</div>
+<!-- chairman message -->
+<section id="chairman" class="bg-brand-mist py-24">
+  <div class="max-w-[1180px] mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <p class="text-xs font-semibold tracking-[0.15em] uppercase text-brand">Leadership</p>
+      <h2 class="text-3xl md:text-4xl font-semibold mt-2">A message from our Chairperson</h2>
+    </div>
+    <div class="grid md:grid-cols-[300px_1fr] gap-12 items-start bg-white rounded-2xl border border-slate-100 shadow-sm p-8 md:p-12 reveal">
+      <div class="text-center">
+        <img src="https://tr.rbxcdn.com/30DAY-Avatar-D0AC566BA992B720F404802C5A597774-Png/720/720/Avatar/Webp/noFilter" alt="Tyler Nicholas" class="w-full max-w-[240px] mx-auto rounded-xl bg-brand-mist" />
+        <div class="mt-5">
+          <div class="text-lg font-semibold">Tyler Nicholas</div>
+          <div class="text-sm text-brand">Chairperson, Air Seychelles Virtual</div>
+        </div>
+      </div>
+      <div class="text-slate-600 font-light leading-relaxed space-y-4">
+        <p>When I founded Air Seychelles Virtual, I set out to build far more than a Roblox group. I wanted a virtual airline that treats every passenger and every member of staff with the same care, structure, and professionalism you would expect from a real national carrier.</p>
+        <p>Today that vision is taking shape across PTFS. We operate scheduled flights, trained departments, and full passenger services, from booking and check-in through to boarding and loyalty rewards. Every journey is designed to feel authentic, from the moment you arrive on this website to the moment your flight is complete.</p>
+        <p>Our goals are clear. We want to be the most realistic and respected virtual airline in the community, to grow a team that takes genuine pride in service, and to give our passengers an experience worth returning for. In the months ahead we will expand our route network, open new career opportunities, and keep improving the systems that power the airline behind the scenes.</p>
+        <p>To everyone who has joined us so far, thank you. Your support is the reason this airline exists, and it is what will carry us forward. I look forward to welcoming you on board.</p>
+        <p class="text-brand-deep font-medium pt-2">Tyler Nicholas<br /><span class="font-light text-slate-500">Chairperson, Air Seychelles Virtual</span></p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- careers -->
-<section id="careers">
-  <div class="wrap">
-    <p class="sec-eyebrow">Careers</p>
-    <h2 class="sec-title">Open Positions</h2>
-    <p class="lead-copy">Join a real airline structure — flight operations, cabin crew, ground services, HR, and more. Positions are posted here as our departments grow.</p>
-    <div class="jobs" id="jobs"></div>
-    <div class="jobs-empty" id="jobsEmpty" style="display:none">
-      No open positions right now. New roles are posted here often — in the meantime, join our <a href="#">Discord</a> to hear first.
-    </div>
+<section id="careers" class="max-w-[1280px] mx-auto px-6 py-24">
+  <div class="reveal">
+    <p class="text-xs font-semibold tracking-[0.15em] uppercase text-brand">Careers</p>
+    <h2 class="text-3xl md:text-4xl font-semibold mt-2">Open positions</h2>
+    <p class="mt-4 text-slate-500 font-light max-w-2xl">Join a real airline structure across flight operations, cabin crew, ground services, human resources, and more. Roles are posted here as our departments grow.</p>
+  </div>
+  <div id="jobs" class="grid md:grid-cols-3 gap-6 mt-10"></div>
+  <div id="jobsEmpty" class="hidden mt-10 border border-dashed border-slate-200 rounded-xl p-10 text-center text-slate-500">
+    There are no open positions at the moment. New roles are posted here regularly.
   </div>
 </section>
 
 <!-- footer -->
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-col">
-        <h5>Air Seychelles Virtual</h5>
-        <a href="#">Check Flight Status</a>
-        <a href="#">Contact Us</a>
-        <a href="#">Route Map</a>
-        <a href="#careers">Careers &amp; HR</a>
-        <a href="#">Help</a>
-        <a href="#">Terms &amp; Conditions</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-      <div class="foot-col">
-        <h5>Popular Destinations</h5>
-        <a href="#">Paphos (IPAP)</a>
-        <a href="#">Greater Rockford (IRFD)</a>
-        <a href="#">Perth</a>
-        <a href="#">Larnaca</a>
-        <a href="#">Tokyo</a>
-        <a href="#">Keflavik</a>
-        <a href="#">Saint Barthélemy</a>
-      </div>
-      <div class="foot-col">
-        <h5>Sign up for our newsletter</h5>
-        <form class="newsletter" id="newsletter">
-          <input type="email" placeholder="Add your e-mail address" aria-label="Email address" required />
-          <button type="submit" aria-label="Subscribe">→</button>
-        </form>
-        <p class="msg" id="newsMsg"></p>
-        <a class="discord-btn" href="#">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19 19 0 0 0 15.3 3l-.2.5a17 17 0 0 1 4 1.3 13 13 0 0 0-14.2 0 17 17 0 0 1 4-1.3L8.7 3A19 19 0 0 0 4 4.4 20 20 0 0 0 .5 18a19 19 0 0 0 5.8 3l.8-1.2a12 12 0 0 1-1.9-.9l.5-.4a13 13 0 0 0 11 0l.5.4a12 12 0 0 1-1.9.9l.8 1.2a19 19 0 0 0 5.8-3A20 20 0 0 0 20 4.4M8.6 14.9c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2m6.8 0c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2"/></svg>
-          Join our Discord
-        </a>
-        <div class="socials" aria-label="Social media">
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 22v-8h3l1-4h-4V8c0-1 .5-2 2-2h2V2h-3c-3 0-5 2-5 5v3H6v4h3v8z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18 2h3l-7 8 8 12h-6l-5-7-6 7H2l8-9L2 2h6l4 6z"/></svg></a>
-          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="#fff"><path d="M23 12s0-3-.4-4.4a3 3 0 0 0-2-2C18.9 5 12 5 12 5s-6.9 0-8.6.5a3 3 0 0 0-2 2C1 9 1 12 1 12s0 3 .4 4.4a3 3 0 0 0 2 2C5.1 19 12 19 12 19s6.9 0 8.6-.5a3 3 0 0 0 2-2C23 15 23 12 23 12M10 15V9l5 3z"/></svg></a>
-        </div>
+<footer id="help" class="bg-brand-foot text-white pt-16 pb-8">
+  <div class="max-w-[1280px] mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 border-b border-white/25 pb-12">
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider mb-5">Travel</h4>
+      <ul class="space-y-3 text-sm font-light">
+        <li><a href="#booking" class="hover:underline">Book a flight</a></li>
+        <li><a href="#booking" class="hover:underline">Manage your booking</a></li>
+        <li><a href="#booking" class="hover:underline">Online check-in</a></li>
+        <li><a href="#" class="hover:underline">Route map</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider mb-5">About</h4>
+      <ul class="space-y-3 text-sm font-light">
+        <li><a href="#about" class="hover:underline">About Air Seychelles Virtual</a></li>
+        <li><a href="#chairman" class="hover:underline">Leadership</a></li>
+        <li><a href="#careers" class="hover:underline">Careers and HR</a></li>
+        <li><a href="#" class="hover:underline">Feedback</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider mb-5">Popular Destinations</h4>
+      <ul id="footDest" class="space-y-3 text-sm font-light"><li class="opacity-70">Loading destinations</li></ul>
+    </div>
+    <div>
+      <h4 class="text-sm font-semibold uppercase tracking-wider mb-5">Stay connected</h4>
+      <form id="news" class="flex bg-white rounded-full p-1.5 pl-4 max-w-xs">
+        <input type="email" required placeholder="Your email address" class="flex-1 text-sm text-brand-deep outline-none bg-transparent" aria-label="Email" />
+        <button class="bg-brand-dark w-9 h-9 rounded-full grid place-items-center" aria-label="Subscribe"><i class="fa-solid fa-arrow-right text-xs"></i></button>
+      </form>
+      <p id="newsMsg" class="text-xs mt-2 h-4 opacity-90"></p>
+      <a href="#" class="inline-flex items-center gap-2 bg-[#5865F2] hover:bg-[#4752c4] transition text-white text-sm font-semibold px-5 py-2.5 rounded-full mt-4"><i class="fa-brands fa-discord"></i>Join our Discord</a>
+      <div class="flex gap-4 mt-5 text-lg">
+        <a href="#" aria-label="Facebook" class="hover:opacity-80"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" aria-label="Instagram" class="hover:opacity-80"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="X" class="hover:opacity-80"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" aria-label="YouTube" class="hover:opacity-80"><i class="fa-brands fa-youtube"></i></a>
       </div>
     </div>
-    <div class="foot-note">
-      <span>© 2026 <em>Air Seychelles Virtual</em>. A Roblox / PTFS virtual airline. Not affiliated with Air Seychelles.</span>
-      <span>All payments and documents are roleplay only.</span>
-    </div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 pt-8 flex flex-col md:flex-row justify-between gap-3 text-xs font-light opacity-90">
+    <span>Copyright 2026 Air Seychelles Virtual. A Roblox and PTFS virtual airline. Not affiliated with Air Seychelles.</span>
+    <span>All payments and documents are roleplay only.</span>
   </div>
 </footer>
 
 <script>
-  const SUPABASE_URL = 'https://molqnxszgmbupgrwjfjk.supabase.co/rest/v1';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbHFueHN6Z21idXBncndqZmprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDIzODMsImV4cCI6MjA5ODgxODM4M30.znEnJYm8jO4ROniwbSF1CgacgVqDNSkZoeQeTF1YTLc';
+  const SB_URL  = 'https://molqnxszgmbupgrwjfjk.supabase.co';
+  const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbHFueHN6Z21idXBncndqZmprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDIzODMsImV4cCI6MjA5ODgxODM4M30.znEnJYm8jO4ROniwbSF1CgacgVqDNSkZoeQeTF1YTLc';
+  const db = window.supabase.createClient(SB_URL, SB_ANON);
+
+  const airportName = {};
+  const bookableStatuses = ['scheduled','checkin_open','airport_services_open','boarding_open'];
+  const boardStatuses = ['scheduled','checkin_open','airport_services_open','boarding_open','boarding_closed','departed','in_flight','delayed'];
+
+  const fmtTime = ts => { if(!ts) return '--:--'; const m = String(ts).match(/T(\d{2}:\d{2})/); return m ? m[1] : String(ts).slice(0,5); };
+  const fmtDate = d => { if(!d) return '--'; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); };
+  const pretty = s => (s||'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  const statusBadge = s => { const k=(s||'scheduled').toLowerCase(); return `<span class="badge b-${k}">${pretty(k)}</span>`; };
+
+  // scroll reveal
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // mobile menu
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
+  document.getElementById('burger').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('hidden'));
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => { x.classList.remove('text-brand','border-brand'); x.classList.add('text-slate-500','border-transparent'); });
+    t.classList.add('text-brand','border-brand'); t.classList.remove('text-slate-500','border-transparent');
+    document.querySelectorAll('[data-panel]').forEach(p => p.classList.add('hidden'));
+    document.querySelector(`[data-panel="${t.dataset.tab}"]`).classList.remove('hidden');
+  }));
+
+  // auth (Discord login)
+  const authBtn = document.getElementById('authBtn');
+  async function refreshAuth() {
+    const { data:{ session } } = await db.auth.getSession();
+    if (session) { authBtn.textContent = 'Log out'; authBtn.onclick = async () => { await db.auth.signOut(); location.reload(); }; }
+    else { authBtn.textContent = 'Login'; authBtn.onclick = () => db.auth.signInWithOAuth({ provider:'discord', options:{ redirectTo: location.href } }); }
+  }
+  refreshAuth();
+
+  // load airports into selects + footer
+  async function loadAirports() {
+    const { data, error } = await db.from('airports').select('code,name,is_hub').order('is_hub',{ascending:false}).order('name');
+    const from = document.getElementById('fFrom'), to = document.getElementById('fTo'), foot = document.getElementById('footDest');
+    if (error || !data || !data.length) {
+      from.innerHTML = '<option value="">Unavailable</option>'; to.innerHTML = from.innerHTML;
+      foot.innerHTML = '<li class="opacity-70">Coming soon</li>'; return;
+    }
+    data.forEach(a => airportName[a.code] = a.name);
+    from.innerHTML = data.map(a => `<option value="${a.code}">${a.name} (${a.code})${a.is_hub?' - Hub':''}</option>`).join('');
+    to.innerHTML = '<option value="">Select destination</option>' + data.map(a => `<option value="${a.code}">${a.name} (${a.code})</option>`).join('');
+    foot.innerHTML = data.slice(0,7).map(a => `<li><a href="#booking" class="hover:underline">${a.name}</a></li>`).join('');
+  }
+
+  // scheduled flights board
+  async function loadBoard() {
+    const body = document.getElementById('board');
+    const { data, error } = await db.from('flights').select('*').in('status', boardStatuses).order('departure_time',{ascending:true}).limit(8);
+    if (error) { body.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Unable to load flights right now.</td></tr>`; return; }
+    if (!data.length) { body.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">No flights are currently scheduled.</td></tr>`; return; }
+    body.innerHTML = data.map(f => `
+      <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+        <td class="py-4 px-6 font-semibold">${f.flight_number}</td>
+        <td class="py-4 px-6 text-slate-600">${airportName[f.origin_code]||f.origin_code} <i class="fa-solid fa-arrow-right-long mx-2 text-slate-300"></i> ${airportName[f.destination_code]||f.destination_code}</td>
+        <td class="py-4 px-6 text-slate-600">${fmtDate(f.flight_date)}</td>
+        <td class="py-4 px-6 font-medium">${fmtTime(f.departure_time)}</td>
+        <td class="py-4 px-6 font-medium">${fmtTime(f.arrival_time)}</td>
+        <td class="py-4 px-6">${statusBadge(f.status)}</td>
+      </tr>`).join('');
+  }
+
+  // flight search
+  document.getElementById('fSearch').addEventListener('click', async () => {
+    const from = document.getElementById('fFrom').value, to = document.getElementById('fTo').value, date = document.getElementById('fDate').value;
+    const box = document.getElementById('flightResults');
+    box.classList.remove('hidden');
+    if (!to) { box.innerHTML = msg('Please choose a destination.'); return; }
+    if (from === to) { box.innerHTML = msg('Origin and destination must be different.'); return; }
+    box.innerHTML = loading('Searching scheduled flights');
+    let q = db.from('flights').select('*').eq('origin_code',from).eq('destination_code',to).in('status',bookableStatuses).order('departure_time');
+    if (date) q = q.eq('flight_date', date);
+    const { data, error } = await q;
+    if (error) { box.innerHTML = msg('We could not search flights right now. Please try again.'); return; }
+    if (!data.length) { box.innerHTML = msg('No scheduled flights match that search.'); return; }
+    box.innerHTML = data.map(f => `
+      <div class="flex flex-wrap items-center justify-between gap-4 border border-slate-200 rounded-xl p-5 mb-3">
+        <div>
+          <div class="font-semibold">${f.flight_number} ${statusBadge(f.status)}</div>
+          <div class="text-sm text-slate-500 mt-1">${airportName[f.origin_code]||f.origin_code} to ${airportName[f.destination_code]||f.destination_code}</div>
+        </div>
+        <div class="text-sm text-slate-600">${fmtDate(f.flight_date)} &middot; ${fmtTime(f.departure_time)} to ${fmtTime(f.arrival_time)}</div>
+        <div class="text-right">
+          <div class="font-semibold text-brand">${f.currency} ${Number(f.price).toFixed(2)}</div>
+          <button class="bookBtn mt-1 text-sm font-semibold text-brand hover:text-brand-dark">Continue</button>
+        </div>
+      </div>`).join('');
+    box.querySelectorAll('.bookBtn').forEach(b => b.addEventListener('click', continueBooking));
   });
 
-  // booking tabs
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.querySelector(`.panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
-    });
+  async function continueBooking() {
+    const { data:{ session } } = await db.auth.getSession();
+    if (!session) { db.auth.signInWithOAuth({ provider:'discord', options:{ redirectTo: location.href } }); return; }
+    alert('You are signed in. The full booking flow is being connected next.');
+  }
+
+  // manage booking
+  document.getElementById('mBtn').addEventListener('click', async () => {
+    const pnr = document.getElementById('mPnr').value.trim(), name = document.getElementById('mName').value.trim();
+    const box = document.getElementById('manageResult'); box.classList.remove('hidden');
+    if (!pnr || !name) { box.innerHTML = msg('Enter your booking reference and last name.'); return; }
+    box.innerHTML = loading('Retrieving your itinerary');
+    const { data, error } = await db.rpc('lookup_booking', { p_pnr: pnr, p_last_name: name });
+    if (error) { box.innerHTML = msg('We could not retrieve that booking right now.'); return; }
+    if (!data || !data.length) { box.innerHTML = msg('No booking found for that reference and last name.'); return; }
+    const b = data[0];
+    box.innerHTML = `
+      <div class="border border-slate-200 rounded-xl p-6 bg-slate-50">
+        <div class="flex justify-between items-start border-b border-slate-200 pb-4 mb-4">
+          <div><div class="text-xs uppercase tracking-wider text-brand font-semibold">Confirmed</div>
+            <div class="text-lg font-semibold mt-1">${b.first_name} ${b.last_name}</div></div>
+          <div class="text-right"><div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Reference</div>
+            <div class="font-semibold">${b.pnr}</div></div>
+        </div>
+        <div class="flex flex-wrap justify-between gap-4 text-sm">
+          <div><div class="font-semibold">${b.flight_number}</div><div class="text-slate-500">${b.origin_name} to ${b.destination_name}</div></div>
+          <div class="text-right"><div class="font-semibold">${fmtDate(b.flight_date)} at ${fmtTime(b.departure_time)}</div>
+            <div class="text-brand font-semibold uppercase text-xs mt-1">${b.cabin}</div></div>
+        </div>
+        <div class="mt-4 text-xs text-slate-500">Check-in status: <span class="font-semibold text-brand-deep">${pretty(b.checkin_status)}</span></div>
+      </div>`;
   });
 
-  // widget actions (front-end placeholders until login/booking flow is wired)
-  const say = (id, text) => document.getElementById(id).textContent = text;
-  document.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const a = btn.dataset.action;
-      if (a === 'search') {
-        const to = document.getElementById('to').value;
-        const depart = document.getElementById('depart').value;
-        if (!to) return say('flightsMsg', 'Please choose a destination.');
-        if (!depart) return say('flightsMsg', 'Please choose a departure date.');
-        say('flightsMsg', 'Flight search opens once you log in with Discord — coming next.');
-      }
-      if (a === 'manage') say('manageMsg', 'Sign in with Discord to manage your booking — coming next.');
-      if (a === 'checkin') say('checkinMsg', 'Online check-in opens 12 hours before departure. Sign in to continue.');
-    });
+  // check-in
+  document.getElementById('cBtn').addEventListener('click', async () => {
+    const pnr = document.getElementById('cPnr').value.trim(), name = document.getElementById('cName').value.trim();
+    const box = document.getElementById('checkinResult'); box.classList.remove('hidden');
+    if (!pnr || !name) { box.innerHTML = msg('Enter your booking reference and last name.'); return; }
+    box.innerHTML = loading('Checking you in');
+    const { data, error } = await db.rpc('public_check_in', { p_pnr: pnr, p_last_name: name });
+    if (error) { box.innerHTML = msg('Check-in is unavailable right now. Please try again.'); return; }
+    const r = data && data[0];
+    if (!r || !r.ok) { box.innerHTML = msg((r && r.message) || 'We could not check you in.'); return; }
+    box.innerHTML = `
+      <div class="border border-brand/30 rounded-xl p-6 bg-brand-mist">
+        <div class="text-brand font-semibold mb-3"><i class="fa-solid fa-circle-check mr-2"></i>${r.message}</div>
+        <div class="grid grid-cols-3 gap-4 text-sm">
+          <div><div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Cabin</div><div class="font-semibold">${pretty(r.cabin)}</div></div>
+          <div><div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Boarding Group</div><div class="font-semibold">${pretty(r.boarding_group)}</div></div>
+          <div><div class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Gate</div><div class="font-semibold">${r.gate}</div></div>
+        </div>
+      </div>`;
   });
+
+  // careers
+  async function loadJobs() {
+    const wrap = document.getElementById('jobs'), empty = document.getElementById('jobsEmpty');
+    const { data, error } = await db.from('job_openings').select('id,title,department,description,application_deadline').eq('is_open',true).order('created_at',{ascending:false});
+    if (error || !data || !data.length) { empty.classList.remove('hidden'); return; }
+    wrap.innerHTML = data.map(j => `
+      <div class="border border-slate-200 rounded-xl p-6 hover:shadow-lg hover:border-transparent transition flex flex-col gap-3">
+        <div class="text-xs font-semibold uppercase tracking-wider text-brand">${pretty(j.department)}</div>
+        <h3 class="text-lg font-semibold">${j.title}</h3>
+        <p class="text-sm text-slate-500 font-light flex-1">${j.description ? j.description.slice(0,110) : 'Help us build a real virtual airline.'}</p>
+        <a href="#" class="text-sm font-semibold text-brand hover:text-brand-dark">Apply now</a>
+      </div>`).join('');
+  }
 
   // newsletter placeholder
-  document.getElementById('newsletter').addEventListener('submit', e => {
-    e.preventDefault();
-    say('newsMsg', 'Thanks — newsletter sign-up will be connected soon.');
-  });
+  document.getElementById('news').addEventListener('submit', e => { e.preventDefault(); document.getElementById('newsMsg').textContent = 'Thank you. Newsletter sign-up will be connected soon.'; });
 
-  // live open positions from Supabase
-  const prettyDept = d => (d || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  async function loadJobs() {
-    const jobsEl = document.getElementById('jobs');
-    const emptyEl = document.getElementById('jobsEmpty');
-    try {
-      const res = await fetch(`${SUPABASE_URL}/job_openings?select=id,title,department,description,application_deadline&is_open=eq.true&order=created_at.desc`, {
-        headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
-      });
-      if (!res.ok) throw new Error(res.status);
-      const jobs = await res.json();
-      if (!jobs.length) { emptyEl.style.display = 'block'; return; }
-      jobsEl.innerHTML = jobs.map(j => `
-        <div class="job">
-          <span class="dept">${prettyDept(j.department)}</span>
-          <h4>${j.title}</h4>
-          <p>${j.description ? j.description.slice(0, 120) : 'Help us build a real virtual airline.'}</p>
-          <a class="apply" href="#">Apply now →</a>
-        </div>`).join('');
-    } catch (err) {
-      emptyEl.style.display = 'block';
-    }
-  }
+  const msg = t => `<div class="border border-slate-200 rounded-xl p-5 text-sm text-slate-500 bg-slate-50">${t}</div>`;
+  const loading = t => `<div class="p-5 text-sm text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>${t}</div>`;
+
+  loadAirports().then(loadBoard);
   loadJobs();
 </script>
 </body>
