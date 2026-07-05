@@ -1,479 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Air Seychelles Virtual | Flying The Creole Spirit</title>
-    
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/Z1bZH6fM/AIR-SEYCHELLES-LOGO.jpg">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <style>
-        /* Base Variables & Reset */
-        :root {
-            --primary-blue: #0060A9;
-            --dark-blue: #00457a;
-            --accent-yellow: #F4C400;
-            --sey-red: #D62828;
-            --sey-green: #007A3D;
-            --text-dark: #333333;
-            --bg-light: #F4F7F6;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Air Seychelles Virtual — Premium Virtual Flying Across PTFS</title>
+<link rel="icon" href="https://i.ibb.co/0RJQ7WvZ/AIR-SEYCHELLES-LOGO.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sky:#0AA1DC; --sky-deep:#0784BC; --sky-soft:#4FC3E8;
+    --navy:#073b57; --ink:#0c2b3a; --muted:#5b7180;
+    --footer:#17a6e8; --mist:#f3f8fb; --line:#e4eef4;
+    --sun1:#e4322b; --sun2:#f39222; --sun3:#fbd23b;
+    --radius:16px; --shadow:0 18px 50px -18px rgba(7,59,87,.35);
+    --wrap:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  .accent-text{background:linear-gradient(90deg,var(--sun1),var(--sun2),var(--sun3));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-        /* --- Loading Screen --- */
-        #loader {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: white; z-index: 9999; display: flex;
-            flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease;
-        }
-        .spinner {
-            width: 60px; height: 60px; border: 6px solid var(--bg-light);
-            border-top: 6px solid var(--primary-blue); border-right: 6px solid var(--sey-red);
-            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  /* ---------- announcement bar ---------- */
+  .announce{background:var(--navy);color:#dff3fb;font-size:.82rem;letter-spacing:.3px;text-align:center;padding:9px 16px;font-weight:300}
+  .announce b{color:#fff;font-weight:600}
 
-        /* --- Animations --- */
-        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
+  /* ---------- nav ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:38px;width:auto}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links > a,.nav-item > button{font-size:.95rem;font-weight:500;color:var(--ink);background:none;border:0;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px}
+  .nav-links > a:hover,.nav-item:hover > button{color:var(--sky-deep)}
+  .nav-item{position:relative}
+  .nav-item .caret{font-size:.6rem;transition:transform .2s}
+  .nav-item:hover .caret{transform:rotate(180deg)}
+  .dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:10px;min-width:220px;opacity:0;visibility:hidden;transition:.2s}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .dropdown a{display:block;padding:9px 12px;border-radius:8px;font-size:.9rem;color:var(--muted)}
+  .dropdown a:hover{background:var(--mist);color:var(--sky-deep)}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .lang{font-size:.85rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:4px}
+  .icon-btn{background:none;border:0;cursor:pointer;color:var(--ink);display:grid;place-items:center;padding:4px}
+  .btn-login{background:var(--sky);color:#fff;padding:9px 20px;border-radius:999px;font-weight:600;font-size:.9rem;transition:.2s}
+  .btn-login:hover{background:var(--sky-deep)}
+  .hamburger{display:none;background:none;border:0;cursor:pointer;color:var(--ink)}
 
-        /* --- Dynamic Advisory Banner --- */
-        #dynamic-advisory {
-            background-color: #fcf8e3; color: #8a6d3b; text-align: center; 
-            padding: 10px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #faebcc;
-            display: none; /* Hidden by default, shown via JS if priority news exists */
-            cursor: pointer;
-        }
-        #dynamic-advisory:hover { background-color: #f5f0d7; }
-        .badge-int { background-color: var(--sey-red); color: white; padding: 2px 10px; border-radius: 12px; margin-right: 10px; font-size: 11px; }
+  /* ---------- hero ---------- */
+  .hero{position:relative;overflow:hidden;color:#fff;
+    background:
+      radial-gradient(120% 90% at 82% 8%, rgba(251,210,59,.35), transparent 45%),
+      radial-gradient(90% 80% at 12% 12%, rgba(189,233,245,.35), transparent 50%),
+      linear-gradient(160deg,#0784bc 0%,#0aa1dc 38%,#4fc3e8 68%,#bde9f5 100%);
+    padding:70px 0 150px}
+  .hero .wrap{position:relative;z-index:3}
+  .eyebrow{font-weight:700;letter-spacing:3px;font-size:.8rem;text-transform:uppercase;opacity:.92}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.4rem);line-height:1;margin:10px 0 6px;font-weight:700;text-shadow:0 6px 24px rgba(7,59,87,.3)}
+  .hero h1 .script{font-family:'Kaushan Script',cursive;font-weight:400;font-size:1.12em;display:inline-block}
+  .hero p.lead{max-width:520px;font-weight:300;font-size:1.05rem;margin-top:10px;opacity:.96}
+  .btn-learn{display:inline-block;margin-top:22px;background:#fff;color:var(--sky-deep);padding:13px 30px;border-radius:999px;font-weight:600;box-shadow:var(--shadow);transition:.2s}
+  .btn-learn:hover{transform:translateY(-2px)}
+  .bird{position:absolute;right:8%;top:30%;width:120px;opacity:.9;z-index:2;animation:float 6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-14px)}}
+  .waves{position:absolute;left:0;right:0;bottom:-1px;z-index:1;width:100%}
 
-        /* --- Navigation Bar --- */
-        .navbar {
-            background-color: var(--primary-blue); color: white; display: flex;
-            justify-content: space-between; align-items: center; padding: 10px 40px;
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .navbar .logo img { height: 45px; border-radius: 4px; transition: transform 0.3s; }
-        .navbar .logo img:hover { transform: scale(1.05); }
-        .nav-links { display: flex; gap: 20px; align-items: center; margin: 0 auto; }
-        .nav-right { display: flex; align-items: center; gap: 20px; font-size: 13px; }
-        .nav-item { position: relative; cursor: pointer; font-weight: 500; font-size: 14px; padding: 10px 0; }
-        .nav-item i { font-size: 10px; margin-left: 5px; }
-        
-        /* Language & Time Styles */
-        .time-display { font-weight: 500; letter-spacing: 0.5px; }
-        .lang-toggle { display: flex; gap: 5px; }
-        .lang-btn { background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s;}
-        .lang-btn:hover { background: rgba(255,255,255,0.2); }
-        
-        /* Dropdowns */
-        .dropdown {
-            display: none; position: absolute; top: 100%; left: 0;
-            background: white; color: var(--text-dark); box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            min-width: 220px; border-radius: 4px; padding: 10px 0;
-        }
-        .nav-item:hover .dropdown { display: block; animation: slideDown 0.3s ease; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Fix for right-aligned dropdowns */
-        .nav-item.align-right .dropdown { left: auto; right: 0; }
-        
-        .dropdown li a { display: block; padding: 10px 20px; font-size: 13px; transition: 0.2s; }
-        .dropdown li a:hover { background: var(--bg-light); color: var(--primary-blue); padding-left: 25px; }
+  /* ---------- booking widget ---------- */
+  .booking{max-width:1040px;margin:-95px auto 0;position:relative;z-index:20;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+  .tabs{display:flex;border-bottom:1px solid var(--line)}
+  .tab{flex:1;text-align:center;padding:18px;font-weight:600;color:var(--muted);cursor:pointer;background:none;border:0;font-family:inherit;font-size:1rem;position:relative}
+  .tab.active{color:var(--sky-deep)}
+  .tab.active::after{content:"";position:absolute;left:20%;right:20%;bottom:-1px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--sun1),var(--sun2),var(--sun3))}
+  .panel{display:none;padding:26px 28px 30px}
+  .panel.active{display:block}
+  .fields{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:end}
+  .field{display:flex;flex-direction:column;gap:6px;position:relative}
+  .field label{font-size:.72rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+  .field input,.field select{border:0;border-bottom:2px solid var(--line);padding:8px 2px;font-family:inherit;font-size:1rem;color:var(--ink);background:none;outline:none}
+  .field input:focus,.field select:focus{border-color:var(--sky)}
+  .field .locked{font-weight:600;color:var(--ink);padding:8px 2px;border-bottom:2px solid var(--line)}
+  .field .hint{font-size:.68rem;color:var(--muted)}
+  .search-btn{grid-column:span 4;justify-self:end;background:var(--sky);color:#fff;border:0;padding:14px 40px;border-radius:999px;font-weight:600;font-size:1rem;cursor:pointer;font-family:inherit;transition:.2s}
+  .search-btn:hover{background:var(--sky-deep)}
+  .note{grid-column:span 4;font-size:.8rem;color:var(--muted);text-align:right}
 
-        /* --- Hero Section --- */
-        .hero-container { padding: 20px 40px; background-color: var(--bg-light); }
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url('https://i.ibb.co/N2bz4t15/Screenshot-20260531-140700-Roblox.jpg') center/cover;
-            height: 550px; border-radius: 30px; display: flex; flex-direction: column; 
-            justify-content: center; padding-left: 80px; color: white; position: relative;
-        }
-        .hero h1 { font-size: 52px; font-weight: 700; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-        .hero p { font-size: 20px; margin-bottom: 20px; font-weight: 400; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-        .btn-blue { background-color: var(--primary-blue); color: white; padding: 12px 24px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-blue:hover { background-color: var(--dark-blue); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  /* ---------- sections ---------- */
+  section{padding:88px 0}
+  .sec-mist{background:var(--mist)}
+  .sec-eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:.78rem;font-weight:700;color:var(--sky-deep)}
+  h2.sec-title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;line-height:1.15;margin:8px 0 18px}
+  .lead-copy{max-width:640px;color:var(--muted);font-size:1.05rem;font-weight:300}
 
-        /* --- Booking Board --- */
-        .booking-board {
-            background: white; border-radius: 15px 15px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-            width: 85%; margin: -60px auto 0; position: relative; z-index: 10;
-        }
-        .tabs { display: flex; background: #e9ecef; border-radius: 15px 15px 0 0; overflow: hidden; }
-        .tab { flex: 1; text-align: center; padding: 18px; font-weight: 600; cursor: pointer; transition: 0.3s; color: #555; }
-        .tab.active { background: white; color: var(--text-dark); border-bottom: 3px solid var(--primary-blue); }
-        .tab:hover:not(.active) { background: #dee2e6; }
-        .tab-content { padding: 30px; display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; }
-        .input-group label { font-size: 12px; color: #666; margin-bottom: 5px; font-weight: 500; }
-        .input-group input, .input-group select { padding: 12px; border: 1px solid #ccc; border-radius: 4px; outline: none; transition: 0.3s; }
-        .input-group input:focus, .input-group select:focus { border-color: var(--primary-blue); box-shadow: 0 0 5px rgba(0,96,169,0.3); }
-        .search-btn { background: var(--primary-blue); color: white; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 600; cursor: pointer; margin-top: 20px; float: right; transition: 0.3s; }
-        .search-btn:hover { background: var(--dark-blue); }
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:8px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+  .stat b{font-size:1.9rem;color:var(--sky-deep);font-weight:700;display:block;font-family:'Poppins'}
+  .stat span{font-size:.85rem;color:var(--muted)}
+  .about-card{background:linear-gradient(160deg,var(--sky) 0%,var(--sky-deep) 100%);border-radius:20px;padding:40px;color:#fff;box-shadow:var(--shadow)}
+  .about-card h3{font-family:'Kaushan Script',cursive;font-weight:400;font-size:2rem;margin-bottom:10px}
+  .about-card ul{list-style:none;margin-top:16px;display:grid;gap:12px}
+  .about-card li{display:flex;gap:10px;font-weight:300;font-size:.98rem}
+  .about-card li::before{content:"✦";color:var(--sun3)}
 
-        /* --- Content Sections --- */
-        .section-wrapper { padding: 80px 10%; display: flex; align-items: center; gap: 50px; }
-        .section-wrapper:nth-child(even) { background-color: white; flex-direction: row-reverse; }
-        .section-img { flex: 1; overflow: hidden; border-radius: 15px; }
-        .section-img img { width: 100%; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.5s ease; }
-        .section-img:hover img { transform: scale(1.03); }
-        .section-text { flex: 1; }
-        .section-text h2 { font-size: 32px; color: var(--primary-blue); margin-bottom: 15px; }
-        .section-text p { font-size: 16px; line-height: 1.6; color: #555; margin-bottom: 25px; }
+  /* leadership */
+  .leader{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;padding:40px;box-shadow:var(--shadow)}
+  .leader-photo{aspect-ratio:1;border-radius:18px;background:
+      radial-gradient(120% 120% at 30% 20%,var(--sun3),transparent 45%),
+      linear-gradient(160deg,var(--sky),var(--sky-deep));display:grid;place-items:center;color:#fff;font-family:'Kaushan Script',cursive;font-size:3rem}
+  .leader h3{font-size:1.6rem;font-weight:700}
+  .leader .role{color:var(--sky-deep);font-weight:600;margin-bottom:14px}
+  .leader p{color:var(--muted);font-weight:300}
+  .leader .sig{font-family:'Kaushan Script',cursive;font-size:1.6rem;color:var(--ink);margin-top:16px}
 
-        /* --- Footer --- */
-        footer { background-color: var(--primary-blue); color: white; padding: 60px 10% 30px; position: relative; margin-top: 50px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
-        .footer-col h3 { font-size: 16px; margin-bottom: 20px; font-weight: 600; }
-        .footer-col ul li { margin-bottom: 12px; font-size: 13px; color: #e0e0e0; }
-        .footer-col ul li a:hover { color: white; text-decoration: underline; padding-left: 5px; transition: 0.3s; }
-        
-        .newsletter { background: white; border-radius: 30px; padding: 5px 15px; display: flex; align-items: center; margin-bottom: 20px; }
-        .newsletter input { border: none; outline: none; padding: 8px; width: 100%; font-size: 13px; color: #333; }
-        .newsletter button { background: none; border: none; color: var(--primary-blue); cursor: pointer; padding: 5px; }
-        
-        .socials a { color: white; font-size: 20px; margin-right: 15px; transition: 0.3s; }
-        .socials a:hover { color: var(--accent-yellow); transform: translateY(-3px); display: inline-block; }
-        
-        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 12px; color: #ccc; }
-        
-        /* Correct Seychelles Flag Trim: Blue, Yellow, Red, White, Green */
-        .seychelles-trim { 
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 12px; 
-            background: linear-gradient(to right, #003F87 20%, #FCD856 20%, #FCD856 40%, #D62828 40%, #D62828 60%, #FFFFFF 60%, #FFFFFF 80%, #007A3D 80%); 
-        }
-    </style>
+  /* careers */
+  .jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;margin-top:34px}
+  .job{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;transition:.2s;display:flex;flex-direction:column;gap:10px}
+  .job:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+  .job .dept{font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sky-deep)}
+  .job h4{font-size:1.2rem;font-weight:600}
+  .job p{color:var(--muted);font-size:.92rem;font-weight:300;flex:1}
+  .job .apply{align-self:flex-start;margin-top:6px;font-weight:600;color:var(--sky-deep);font-size:.9rem}
+  .job .apply:hover{color:var(--sun2)}
+  .jobs-empty{margin-top:30px;background:#fff;border:1px dashed var(--line);border-radius:16px;padding:40px;text-align:center;color:var(--muted)}
+  .jobs-empty a{color:var(--sky-deep);font-weight:600}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--footer);color:#fff;padding:70px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:40px}
+  .foot-col h5{font-size:.95rem;font-weight:600;margin-bottom:18px;opacity:.95}
+  .foot-col a{display:block;padding:7px 0;font-weight:300;font-size:.95rem;opacity:.92}
+  .foot-col a:hover{opacity:1;text-decoration:underline}
+  .newsletter{display:flex;background:#fff;border-radius:999px;padding:6px 6px 6px 18px;max-width:360px;align-items:center}
+  .newsletter input{border:0;outline:none;flex:1;font-family:inherit;color:var(--ink);background:none;font-size:.9rem}
+  .newsletter button{background:var(--sky-deep);border:0;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+  .discord-btn{display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;margin-top:22px;transition:.2s}
+  .discord-btn:hover{background:#4752c4}
+  .socials{display:flex;gap:16px;margin-top:22px}
+  .socials a{width:22px;height:22px;opacity:.95}
+  .socials a:hover{opacity:1;transform:translateY(-2px)}
+  .foot-note{border-top:1px solid rgba(255,255,255,.25);margin-top:48px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem;font-weight:300;opacity:.9}
+  .foot-note em{font-style:normal;font-weight:600}
+  .msg{font-size:.82rem;margin-top:8px}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:32px}
+    .leader{grid-template-columns:1fr;text-align:center}
+    .leader-photo{max-width:220px;margin:0 auto}
+    .foot-grid{grid-template-columns:1fr}
+    .fields{grid-template-columns:repeat(2,1fr)}
+    .search-btn,.note{grid-column:span 2}
+    .bird{display:none}
+  }
+  @media(max-width:720px){
+    .nav-links{position:fixed;inset:76px 0 auto 0;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);display:none}
+    .nav-links.open{display:flex}
+    .nav-links > a,.nav-item > button{padding:14px 0;width:100%;justify-content:space-between}
+    .dropdown{position:static;transform:none;box-shadow:none;border:0;opacity:1;visibility:visible;padding:0 0 8px 12px;min-width:auto}
+    .nav-item:hover .dropdown{transform:none}
+    .hamburger{display:block}
+    .btn-login{display:none}
+    .fields{grid-template-columns:1fr}
+    .search-btn,.note{grid-column:span 1}
+    section{padding:60px 0}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+  :focus-visible{outline:3px solid var(--sun2);outline-offset:2px;border-radius:4px}
+</style>
 </head>
 <body>
 
-    <div id="loader">
-        <div class="spinner"></div>
-        <h2 style="color: var(--primary-blue); font-weight: 600;">Air Seychelles Virtual</h2>
-        <p style="color: #666; font-size: 14px; margin-top: 10px;" data-fr="Chargement en cours...">Loading experience...</p>
-    </div>
+<!-- announcement bar -->
+<div class="announce">✈ Now boarding across PTFS — <b>Air Seychelles Virtual</b> is live. Book your first virtual journey today.</div>
 
-    <div id="dynamic-advisory">
-        <span class="badge-int" data-fr="ALERTE">PRIORITY</span> 
-        <span id="advisory-text">Loading latest advisories...</span>
-    </div>
+<!-- nav -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Air Seychelles Virtual home">
+      <img src="https://i.ibb.co/C399b1XT/images.png" alt="Air Seychelles Virtual" />
+    </a>
 
-    <nav class="navbar">
-        <div class="logo">
-            <a href="/"><img src="https://i.ibb.co/Z1bZH6fM/AIR-SEYCHELLES-LOGO.jpg" alt="Air Seychelles Virtual"></a>
+    <nav class="nav-links" id="navLinks">
+      <div class="nav-item">
+        <button aria-haspopup="true">Travel Info <span class="caret">▼</span></button>
+        <div class="dropdown">
+          <a href="#booking">Book Your Flight</a>
+          <a href="#">Route Map</a>
+          <a href="#">Manage Your Booking</a>
+          <a href="#">Seychellois Miles</a>
+          <a href="#">VIP Services</a>
+          <a href="#">Travel Terms &amp; Conditions</a>
         </div>
-        
-        <ul class="nav-links">
-            <li class="nav-item"><span data-fr="Voyage">Travel</span> <i class="fas fa-chevron-down"></i>
-                <ul class="dropdown">
-                    <li><a href="/travel/book/">Book a Flight</a></li>
-                    <li><a href="/travel/manage/">Manage Booking</a></li>
-                    <li><a href="/travel/route-map/">Route Map</a></li>
-                    <li><a href="/travel/fleet/">Fleet</a></li>
-                    <li><a href="/travel/cabin-classes/">Cabin Classes</a></li>
-                    <li><a href="/travel/vip/">Air Seychelles Virtual VIP</a></li>
-                    <li><a href="/travel/flight-rules/">Flight Rules</a></li>
-                </ul>
-            </li>
-            <li class="nav-item"><span data-fr="À Propos">About Us</span> <i class="fas fa-chevron-down"></i>
-                <ul class="dropdown">
-                    <li><a href="/about/">About Air Seychelles Virtual</a></li>
-                    <li><a href="/about/leadership/">Our Leadership</a></li>
-                    <li><a href="/about/destinations/">Destinations</a></li>
-                    <li><a href="/about/news/">News</a></li>
-                    <li><a href="/about/careers/">Careers</a></li>
-                </ul>
-            </li>
-            <li class="nav-item"><span data-fr="Aide">Help</span> <i class="fas fa-chevron-down"></i>
-                <ul class="dropdown">
-                    <li><a href="/help/faq/">Frequently Asked Questions</a></li>
-                    <li><a href="/help/contact/">Contact Us</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <div class="nav-right">
-            <div class="time-display" id="seychelles-time">Seychelles Local Time: --:--:--</div>
-            <div class="lang-toggle">
-                <button class="lang-btn" onclick="toggleLanguage('EN')">EN</button>
-                <button class="lang-btn" onclick="toggleLanguage('FR')">FR</button>
-            </div>
-            <div class="nav-item align-right" style="border-left: 1px solid rgba(255,255,255,0.3); padding-left: 15px;">
-                <span data-fr="Connexion">Login</span> <i class="fas fa-user-circle"></i>
-                <ul class="dropdown">
-                    <li><a href="/login/passenger/">Passenger Dashboard</a></li>
-                    <li><a href="/login/staff/">Staff Dashboard</a></li>
-                    <li><a href="/login/admin/">Website Admin Dashboard</a></li>
-                </ul>
-            </div>
+      </div>
+      <div class="nav-item">
+        <button aria-haspopup="true">About Us <span class="caret">▼</span></button>
+        <div class="dropdown">
+          <a href="#about">About Air Seychelles Virtual</a>
+          <a href="#leadership">Our Leadership</a>
+          <a href="#careers">Careers</a>
+          <a href="#">Our Fleet</a>
+          <a href="#">Destinations</a>
+          <a href="#">Feedback</a>
         </div>
+      </div>
+      <a href="#">Explore Seychelles</a>
+      <a href="#">Help</a>
     </nav>
 
-    <div class="hero-container fade-in">
-        <div class="hero">
-            <h1 data-en="Visit Seychelles" data-fr="Visitez les Seychelles">Visit Seychelles</h1>
-            <p data-en="Find the best fares to the islands with Air Seychelles Virtual" data-fr="Trouvez les meilleurs tarifs vers les îles">Find the best fares to the islands with Air Seychelles Virtual</p>
-            <button class="btn-blue" onclick="window.location.href='/travel/book/'" data-en="Learn More" data-fr="En savoir plus">Learn More</button>
-        </div>
+    <div class="nav-right">
+      <span class="lang">ENG ▾</span>
+      <button class="icon-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      </button>
+      <a href="#" class="btn-login">Login</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
+  </div>
+</header>
 
-    <div class="booking-board fade-in">
-        <div class="tabs">
-            <div class="tab active" onclick="openTab('book')" data-fr="Réserver">Book a Flight</div>
-            <div class="tab" onclick="openTab('manage')" data-fr="Gérer la Réservation">Manage Booking</div>
-            <div class="tab" onclick="openTab('checkin')" data-fr="S'enregistrer">Check-In</div>
-            <div class="tab" onclick="openTab('status')" data-fr="Statut du Vol">Flight Status</div>
-        </div>
+<!-- hero -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Non-stop virtual flights across PTFS</p>
+    <h1><span class="script">Air Seychelles</span><br><span class="accent-text">Virtual</span></h1>
+    <p class="lead">A premium Roblox virtual airline inspired by the spirit of Seychelles — from the first click to final boarding, fly the way real passengers do.</p>
+    <a href="#about" class="btn-learn">Learn More</a>
+  </div>
+  <svg class="bird" viewBox="0 0 100 60" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path d="M8 40 Q30 8 50 34 Q70 8 92 40"/></svg>
+  <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#ffffff" d="M0,64 C240,120 480,20 720,52 C960,84 1200,120 1440,72 L1440,120 L0,120 Z"/></svg>
+</section>
 
-        <div id="book" class="tab-content active">
-            <div class="form-row">
-                <div class="input-group">
-                    <label>From</label>
-                    <select id="book-from"><option value="">Select Departure</option></select>
-                </div>
-                <div class="input-group">
-                    <label>To</label>
-                    <select id="book-to"><option value="">Select Destination</option></select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="input-group">
-                    <label>Depart Date</label>
-                    <input type="date">
-                </div>
-                <div class="input-group">
-                    <label>Cabin Class</label>
-                    <select>
-                        <option>Economy Class</option>
-                        <option>Business Class</option>
-                    </select>
-                </div>
-            </div>
-            <button class="search-btn" onclick="window.location.href='/travel/book/'">Search Flights</button>
-        </div>
+<!-- booking widget -->
+<div class="booking" id="booking">
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="flights" role="tab">Flights</button>
+    <button class="tab" data-tab="manage" role="tab">Manage Booking</button>
+    <button class="tab" data-tab="checkin" role="tab">Check-In</button>
+  </div>
 
-        <div id="manage" class="tab-content">
-            <div class="form-row">
-                <div class="input-group">
-                    <label>Booking Reference</label>
-                    <input type="text" placeholder="e.g. 146S3M">
-                </div>
-                <div class="input-group">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Passenger Last Name">
-                </div>
-            </div>
-            <button class="search-btn" onclick="window.location.href='/travel/manage/'">Retrieve Booking</button>
-        </div>
-        
-        <div id="checkin" class="tab-content">
-            <p style="color:#666; font-size: 14px;">Online check-in opens 24 hours prior to your scheduled PTFS departure.</p>
-            <button class="search-btn" style="margin-top:10px;" onclick="window.location.href='/travel/manage/'">Proceed to Check-In</button>
-        </div>
-
-        <div id="status" class="tab-content">
-            <div class="input-group">
-                <label>Flight Number</label>
-                <input type="text" placeholder="e.g. HM010">
-            </div>
-            <button class="search-btn" onclick="window.location.href='/travel/'">Check Status</button>
-        </div>
+  <!-- Flights -->
+  <div class="panel active" data-panel="flights">
+    <div class="fields">
+      <div class="field">
+        <label>Trip Type</label>
+        <div class="locked">One Way</div>
+        <span class="hint">Air Seychelles Virtual flies one-way only</span>
+      </div>
+      <div class="field">
+        <label for="from">From</label>
+        <select id="from">
+          <option value="IPAP">Paphos International — IPAP (Hub)</option>
+          <option value="IRFD">Greater Rockford International — IRFD</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="to">Destination</label>
+        <select id="to">
+          <option value="">Select destination</option>
+          <option value="IRFD">Greater Rockford International — IRFD</option>
+          <option value="IPAP">Paphos International — IPAP</option>
+          <option value="" disabled>More destinations coming soon</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="depart">Depart</label>
+        <input type="date" id="depart" />
+      </div>
+      <div class="field">
+        <label>Passengers</label>
+        <div class="locked">1 Adult</div>
+        <span class="hint">Bookings are for one passenger</span>
+      </div>
+      <button class="search-btn" data-action="search">Search Flights</button>
     </div>
+    <p class="msg" id="flightsMsg"></p>
+  </div>
 
-    <div class="section-wrapper fade-in">
-        <div class="section-img">
-            <img src="https://i.ibb.co/5xYP6LNV/Chat-GPT-Image-Jun-6-2026-08-20-23-AM.png" alt="Business Class Upgrade">
-        </div>
-        <div class="section-text">
-            <h2 data-en="Upgrade Your Experience" data-fr="Améliorez Votre Expérience">Upgrade Your Experience</h2>
-            <p data-en="Elevate your virtual journey by utilizing your Air Seychelles Virtual Miles. Upgrade to our Business Class and enjoy priority boarding at the gate, exclusive seating on our A320neos, and dedicated in-flight service." data-fr="Élevez votre voyage virtuel en utilisant vos Miles Virtuels. Passez en classe affaires et profitez d'un embarquement prioritaire.">Elevate your virtual journey by utilizing your Air Seychelles Virtual Miles. Upgrade to our Business Class and enjoy priority boarding at the gate, exclusive seating on our A320neos, and dedicated in-flight service.</p>
-            <button class="btn-blue" onclick="window.location.href='/travel/cabin-classes/'" data-en="View Cabin Classes" data-fr="Voir les Classes">View Cabin Classes</button>
-        </div>
+  <!-- Manage -->
+  <div class="panel" data-panel="manage">
+    <div class="fields">
+      <div class="field"><label for="mPnr">Booking Reference (PNR)</label><input id="mPnr" placeholder="ASV-XXXXXX" /></div>
+      <div class="field"><label for="mName">Last Name</label><input id="mName" placeholder="As on your passport" /></div>
+      <button class="search-btn" data-action="manage">Retrieve Booking</button>
     </div>
+    <p class="msg" id="manageMsg"></p>
+  </div>
 
-    <div class="section-wrapper fade-in">
-        <div class="section-img">
-            <img src="https://i.ibb.co/XZJhmpg9/Chat-GPT-Image-Jun-6-2026-07-52-02-AM.png" alt="Discover Seychelles">
-        </div>
-        <div class="section-text">
-            <h2 data-en="Discover Seychelles" data-fr="Découvrez les Seychelles">Discover Seychelles</h2>
-            <p data-en="Experience the Creole Spirit. As the premier Roblox PTFS airline, we operate highly realistic domestic island-hopping routes using our DHC-6 Twin Otters, alongside international long-haul networks connecting our Mahé hub to the world." data-fr="Vivez l'esprit créole. En tant que première compagnie aérienne sur PTFS, nous opérons des vols intérieurs très réalistes.">Experience the Creole Spirit. As the premier Roblox PTFS airline, we operate highly realistic domestic island-hopping routes using our DHC-6 Twin Otters, alongside international long-haul networks connecting our Mahé hub to the world.</p>
-            <button class="btn-blue" onclick="window.location.href='/about/destinations/'" data-en="View Destinations" data-fr="Voir les Destinations">View Destinations</button>
-        </div>
+  <!-- Check-in -->
+  <div class="panel" data-panel="checkin">
+    <div class="fields">
+      <div class="field"><label for="cPnr">Booking Reference (PNR)</label><input id="cPnr" placeholder="ASV-XXXXXX" /></div>
+      <div class="field"><label for="cName">Last Name</label><input id="cName" placeholder="As on your passport" /></div>
+      <button class="search-btn" data-action="checkin">Check In</button>
     </div>
+    <p class="msg" id="checkinMsg"></p>
+  </div>
+</div>
 
-    <footer class="fade-in">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h3>Travel</h3>
-                <ul>
-                    <li><a href="/travel/">Check Flight Status</a></li>
-                    <li><a href="/help/contact/">Contact Us</a></li>
-                    <li><a href="/travel/route-map/">Route Map</a></li>
-                    <li><a href="/help/">Help Desk</a></li>
-                    <li><a href="/travel/flight-rules/">Terms & Conditions</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Popular Destinations</h3>
-                <ul>
-                    <li><a href="/about/destinations/">Mahé (IPAP)</a></li>
-                    <li><a href="/about/destinations/">Praslin (ISKP)</a></li>
-                    <li><a href="/about/destinations/">Abu Dhabi (ILAR)</a></li>
-                    <li><a href="/about/destinations/">Tel Aviv (IKFL)</a></li>
-                    <li><a href="/about/destinations/">Johannesburg (IPPH)</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>Sign up for our newsletter</h3>
-                <div class="newsletter">
-                    <input type="email" placeholder="Add your e-mail address">
-                    <button type="submit" onclick="alert('Subscribed to Newsletter!')"><i class="fas fa-arrow-right"></i></button>
-                </div>
-                <div class="socials">
-                    <a href="https://discord.gg/ptCJWTDgS5" target="_blank"><i class="fab fa-discord"></i></a>
-                    <a href="https://www.roblox.com/communities/33422203/Air-Seychelles-Virtual" target="_blank"><i class="fas fa-gamepad"></i></a>
-                    <a href="https://x.com/airseyvirtual" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.youtube.com/@AirSeychellesRoblox" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.instagram.com/hm_airseychellesvirtual/" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/profile.php?id=61590659184982" target="_blank"><i class="fab fa-facebook"></i></a>
-                </div>
-            </div>
-            <div class="footer-col" style="text-align: center; display: flex; align-items: center; justify-content: center;">
-                <img src="https://i.ibb.co/1tcyLSRN/TNG-Logo.png" style="width: 150px; border-radius: 8px;" alt="Tyler Nicholas Group">
-            </div>
+<!-- about -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="sec-eyebrow">About Us</p>
+      <h2 class="sec-title">Not a roleplay group — a complete virtual airline.</h2>
+      <p class="lead-copy">Air Seychelles Virtual operates like a real structured airline: scheduled flights, trained departments, virtual passports and boarding passes, and automated updates through Discord. Every passenger gets the full journey, from booking to boarding.</p>
+      <div class="stats">
+        <div class="stat"><b>PTFS</b><span>Our home platform for live operations</span></div>
+        <div class="stat"><b>IPAP</b><span>Paphos International — our main hub</span></div>
+        <div class="stat"><b>9</b><span>Departments from OCC to Cabin Services</span></div>
+        <div class="stat"><b>24/7</b><span>Discord-powered passenger updates</span></div>
+      </div>
+    </div>
+    <div class="about-card">
+      <h3>Fly with purpose</h3>
+      <p style="font-weight:300;opacity:.95">Everything a real passenger expects, built for our world:</p>
+      <ul>
+        <li>Discord login &amp; virtual Seychelles passport</li>
+        <li>Scheduled-flight booking with real PNRs</li>
+        <li>Online check-in &amp; digital boarding passes</li>
+        <li>Seychellois Miles loyalty rewards</li>
+        <li>Automated confirmations to your DMs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- leadership -->
+<section class="sec-mist" id="leadership">
+  <div class="wrap">
+    <p class="sec-eyebrow">Our Leadership</p>
+    <h2 class="sec-title">Founder &amp; Chief Executive Officer</h2>
+    <div class="leader">
+      <div class="leader-photo">AS</div>
+      <div>
+        <h3>[ Founder Name ]</h3>
+        <p class="role">Founder &amp; Chief Executive Officer</p>
+        <p>Air Seychelles Virtual was founded on a simple belief: a virtual airline can feel as real, professional, and welcoming as the airline that inspired it. Our mission is to give every passenger and every staff member a genuine airline experience — structured operations, real service standards, and the warmth of Seychellois hospitality carried across PTFS.</p>
+        <div class="sig">Air Seychelles Virtual</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- careers -->
+<section id="careers">
+  <div class="wrap">
+    <p class="sec-eyebrow">Careers</p>
+    <h2 class="sec-title">Open Positions</h2>
+    <p class="lead-copy">Join a real airline structure — flight operations, cabin crew, ground services, HR, and more. Positions are posted here as our departments grow.</p>
+    <div class="jobs" id="jobs"></div>
+    <div class="jobs-empty" id="jobsEmpty" style="display:none">
+      No open positions right now. New roles are posted here often — in the meantime, join our <a href="#">Discord</a> to hear first.
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h5>Air Seychelles Virtual</h5>
+        <a href="#">Check Flight Status</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Route Map</a>
+        <a href="#careers">Careers &amp; HR</a>
+        <a href="#">Help</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="foot-col">
+        <h5>Popular Destinations</h5>
+        <a href="#">Paphos (IPAP)</a>
+        <a href="#">Greater Rockford (IRFD)</a>
+        <a href="#">Perth</a>
+        <a href="#">Larnaca</a>
+        <a href="#">Tokyo</a>
+        <a href="#">Keflavik</a>
+        <a href="#">Saint Barthélemy</a>
+      </div>
+      <div class="foot-col">
+        <h5>Sign up for our newsletter</h5>
+        <form class="newsletter" id="newsletter">
+          <input type="email" placeholder="Add your e-mail address" aria-label="Email address" required />
+          <button type="submit" aria-label="Subscribe">→</button>
+        </form>
+        <p class="msg" id="newsMsg"></p>
+        <a class="discord-btn" href="#">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19 19 0 0 0 15.3 3l-.2.5a17 17 0 0 1 4 1.3 13 13 0 0 0-14.2 0 17 17 0 0 1 4-1.3L8.7 3A19 19 0 0 0 4 4.4 20 20 0 0 0 .5 18a19 19 0 0 0 5.8 3l.8-1.2a12 12 0 0 1-1.9-.9l.5-.4a13 13 0 0 0 11 0l.5.4a12 12 0 0 1-1.9.9l.8 1.2a19 19 0 0 0 5.8-3A20 20 0 0 0 20 4.4M8.6 14.9c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2m6.8 0c-1 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2"/></svg>
+          Join our Discord
+        </a>
+        <div class="socials" aria-label="Social media">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13 22v-8h3l1-4h-4V8c0-1 .5-2 2-2h2V2h-3c-3 0-5 2-5 5v3H6v4h3v8z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18 2h3l-7 8 8 12h-6l-5-7-6 7H2l8-9L2 2h6l4 6z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="#fff"><path d="M23 12s0-3-.4-4.4a3 3 0 0 0-2-2C18.9 5 12 5 12 5s-6.9 0-8.6.5a3 3 0 0 0-2 2C1 9 1 12 1 12s0 3 .4 4.4a3 3 0 0 0 2 2C5.1 19 12 19 12 19s6.9 0 8.6-.5a3 3 0 0 0 2-2C23 15 23 12 23 12M10 15V9l5 3z"/></svg></a>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Air Seychelles Virtual. All rights reserved.</p>
-        </div>
-        <div class="seychelles-trim"></div>
-    </footer>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 <em>Air Seychelles Virtual</em>. A Roblox / PTFS virtual airline. Not affiliated with Air Seychelles.</span>
+      <span>All payments and documents are roleplay only.</span>
+    </div>
+  </div>
+</footer>
 
-    <script>
-        // --- 1. Loading Screen Fade Out ---
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = 'none'; }, 500);
-            }, 800);
-        });
+<script>
+  const SUPABASE_URL = 'https://molqnxszgmbupgrwjfjk.supabase.co/rest/v1';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vbHFueHN6Z21idXBncndqZmprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNDIzODMsImV4cCI6MjA5ODgxODM4M30.znEnJYm8jO4ROniwbSF1CgacgVqDNSkZoeQeTF1YTLc';
 
-        // --- 2. Live Seychelles Local Time ---
-        function updateTime() {
-            const options = { timeZone: 'Indian/Mahe', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const timeString = new Intl.DateTimeFormat('en-GB', options).format(new Date());
-            document.getElementById('seychelles-time').innerText = `Seychelles Local Time: ${timeString}`;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+  // mobile menu
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
 
-        // --- 3. Scroll Animations (Fade In) ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // booking tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
 
-        // --- 4. Language Translation Toggle ---
-        let currentLang = 'EN';
-        function toggleLanguage(lang) {
-            if (currentLang === lang) return;
-            currentLang = lang;
-            document.querySelectorAll(`[data-${lang.toLowerCase()}]`).forEach(el => {
-                const newText = el.getAttribute(`data-${lang.toLowerCase()}`);
-                if (newText) {
-                    el.style.opacity = 0;
-                    setTimeout(() => {
-                        if (el.tagName === 'INPUT') { el.placeholder = newText; } 
-                        else { el.innerText = newText; }
-                        el.style.opacity = 1;
-                    }, 200);
-                }
-            });
-        }
+  // widget actions (front-end placeholders until login/booking flow is wired)
+  const say = (id, text) => document.getElementById(id).textContent = text;
+  document.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const a = btn.dataset.action;
+      if (a === 'search') {
+        const to = document.getElementById('to').value;
+        const depart = document.getElementById('depart').value;
+        if (!to) return say('flightsMsg', 'Please choose a destination.');
+        if (!depart) return say('flightsMsg', 'Please choose a departure date.');
+        say('flightsMsg', 'Flight search opens once you log in with Discord — coming next.');
+      }
+      if (a === 'manage') say('manageMsg', 'Sign in with Discord to manage your booking — coming next.');
+      if (a === 'checkin') say('checkinMsg', 'Online check-in opens 12 hours before departure. Sign in to continue.');
+    });
+  });
 
-        // --- 5. Booking Tab Logic ---
-        function openTab(tabId) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-        }
+  // newsletter placeholder
+  document.getElementById('newsletter').addEventListener('submit', e => {
+    e.preventDefault();
+    say('newsMsg', 'Thanks — newsletter sign-up will be connected soon.');
+  });
 
-        // --- 6. SUPABASE REAL BACKEND CONNECTION ---
-        const supabaseUrl = 'https://dwtvzwwabeqammyfxeev.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3dHZ6d3dhYmVxYW1teWZ4ZWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMDI3NzksImV4cCI6MjA5NTc3ODc3OX0.N5o_Ml9mGvod5ek2uXRMVVJqFiDPwhp3hpaO3NObp2w';
-        
-        // Initialize Supabase client
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        
-        // Fetch Priority News Banner from your database
-        async function fetchPriorityNews() {
-            try {
-                const { data, error } = await supabase
-                    .from('news_posts')
-                    .select('id, title')
-                    .eq('is_priority', true)
-                    .order('published_at', { ascending: false })
-                    .limit(1);
-                    
-                if (data && data.length > 0) {
-                    const banner = document.getElementById('dynamic-advisory');
-                    document.getElementById('advisory-text').innerText = data[0].title;
-                    banner.style.display = 'block'; 
-                    banner.onclick = () => window.location.href = `/about/news/?id=${data[0].id}`;
-                }
-            } catch (err) {
-                console.error("Failed to load priority news from Supabase", err);
-            }
-        }
-        
-        // Fetch Destinations to populate the booking board dropdowns
-        async function fetchDestinations() {
-            try {
-                const { data, error } = await supabase
-                    .from('destinations')
-                    .select('icao');
-                    
-                if (data && data.length > 0) {
-                    const fromSelect = document.getElementById('book-from');
-                    const toSelect = document.getElementById('book-to');
-                    
-                    data.forEach(dest => {
-                        let optFrom = document.createElement('option');
-                        optFrom.value = dest.icao;
-                        optFrom.textContent = dest.icao;
-                        fromSelect.appendChild(optFrom);
-                        
-                        let optTo = document.createElement('option');
-                        optTo.value = dest.icao;
-                        optTo.textContent = dest.icao;
-                        toSelect.appendChild(optTo);
-                    });
-                }
-            } catch (err) {
-                console.error("Failed to load destinations from Supabase", err);
-            }
-        }
-        
-        // Execute the backend fetches on load
-        fetchPriorityNews();
-        fetchDestinations();
-    </script>
+  // live open positions from Supabase
+  const prettyDept = d => (d || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  async function loadJobs() {
+    const jobsEl = document.getElementById('jobs');
+    const emptyEl = document.getElementById('jobsEmpty');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/job_openings?select=id,title,department,description,application_deadline&is_open=eq.true&order=created_at.desc`, {
+        headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` }
+      });
+      if (!res.ok) throw new Error(res.status);
+      const jobs = await res.json();
+      if (!jobs.length) { emptyEl.style.display = 'block'; return; }
+      jobsEl.innerHTML = jobs.map(j => `
+        <div class="job">
+          <span class="dept">${prettyDept(j.department)}</span>
+          <h4>${j.title}</h4>
+          <p>${j.description ? j.description.slice(0, 120) : 'Help us build a real virtual airline.'}</p>
+          <a class="apply" href="#">Apply now →</a>
+        </div>`).join('');
+    } catch (err) {
+      emptyEl.style.display = 'block';
+    }
+  }
+  loadJobs();
+</script>
 </body>
 </html>
